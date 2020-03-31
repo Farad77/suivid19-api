@@ -30,7 +30,12 @@
 
 ## Installation
 
+You will need to install Node and npm first. Here is a [tuto to install them via NVM](https://tecadmin.net/install-nodejs-with-nvm/).
+ 
 ```bash
+# install nest
+$ npm i -g @nestjs/cli
+# install modules
 $ npm install
 ```
 
