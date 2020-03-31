@@ -16,6 +16,7 @@ async function bootstrap() {
     customSiteTitle: 'Suivid19 API'
   });
 
-  await app.listen(3000);
+  app.enableCors();
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
