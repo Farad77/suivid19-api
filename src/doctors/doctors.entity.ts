@@ -1,6 +1,6 @@
-import { Entity } from 'typeorm';
+import { ChildEntity } from 'typeorm';
 import { User } from 'src/users/users.entity';
 
-@Entity()
+@ChildEntity()
 export class Doctor extends User {
 }

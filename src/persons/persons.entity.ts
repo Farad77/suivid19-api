@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { ChildEntity, Column, OneToMany } from 'typeorm';
 import { User } from 'src/users/users.entity';
 import { Relative } from 'src/relatives/relatives.entity';
 
@@ -8,7 +8,7 @@ export enum Gender {
   FEMALE = 2
 }
 
-@Entity()
+@ChildEntity()
 export class Person extends User {
   @Column({ default: 0 })
   birthday: number;
