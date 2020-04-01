@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Gender } from '../persons.entity';
 import { Relative } from 'src/relatives/relatives.entity';
 
-export class CreateUserDto {
+export class CreatePersonDto {
   @ApiProperty()
   lastName: string;
 
