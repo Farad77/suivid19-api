@@ -4,10 +4,10 @@ import { RelativeType } from '../relatives.entity';
 
 export class UpdateRelativeDto {
   @ApiPropertyOptional()
-  person: Person;
+  person: Promise<Person>;
 
   @ApiPropertyOptional()
-  relative: Person;
+  relative: Promise<Person>;
 
   @ApiPropertyOptional()
   type: RelativeType;

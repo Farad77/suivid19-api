@@ -46,5 +46,5 @@ export class UpdatePersonDto {
   isHospitalized: boolean;
 
   @ApiPropertyOptional()
-  relatives: Relative[];
+  relatives: Promise<Relative[]>;
 }
