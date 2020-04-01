@@ -1,32 +1,9 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Gender } from '../persons.entity';
 import { Relative } from 'src/relatives/relatives.entity';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
-export class CreatePersonDto {
-  @ApiProperty()
-  lastName: string;
-
-  @ApiProperty()
-  firstName: string;
-
-  @ApiProperty()
-  email: string;
-
-  @ApiProperty()
-  password: string;
-
-  @ApiProperty()
-  address: string;
-
-  @ApiProperty()
-  city: string;
-
-  @ApiProperty()
-  postalCode: number;
-
-  @ApiProperty()
-  phone: string;
-
+export class CreatePersonDto extends CreateUserDto {
   @ApiPropertyOptional()
   birthday: number;
 

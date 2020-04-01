@@ -1,32 +1,9 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Gender } from '../persons.entity';
 import { Relative } from 'src/relatives/relatives.entity';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 
-export class UpdatePersonDto {
-  @ApiPropertyOptional()
-  lastName: string;
-
-  @ApiPropertyOptional()
-  firstName: string;
-
-  @ApiPropertyOptional()
-  email: string;
-
-  @ApiPropertyOptional()
-  password: string;
-
-  @ApiPropertyOptional()
-  address: string;
-
-  @ApiPropertyOptional()
-  city: string;
-
-  @ApiPropertyOptional()
-  postalCode: number;
-
-  @ApiPropertyOptional()
-  phone: string;
-
+export class UpdatePersonDto extends UpdateUserDto {
   @ApiPropertyOptional()
   birthday: number;
 
