@@ -7,6 +7,7 @@ import { Connection } from 'typeorm';
 import { PersonsModule } from './persons/persons.module';
 import { RelativesModule } from './relatives/relatives.module';
 import { DoctorsModule } from './doctors/doctors.module';
+import { AdminsModule } from './admins/admins.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { DoctorsModule } from './doctors/doctors.module';
     UsersModule,
     PersonsModule,
     RelativesModule,
-    DoctorsModule
+    DoctorsModule,
+    AdminsModule
   ],
   controllers: [AppController],
   providers: [AppService],
