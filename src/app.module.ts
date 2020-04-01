@@ -6,13 +6,15 @@ import { UsersModule } from './users/users.module';
 import { Connection } from 'typeorm';
 import { PersonsModule } from './persons/persons.module';
 import { RelativesModule } from './relatives/relatives.module';
+import { DoctorsModule } from './doctors/doctors.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
     UsersModule,
     PersonsModule,
-    RelativesModule
+    RelativesModule,
+    DoctorsModule
   ],
   controllers: [AppController],
   providers: [AppService],
