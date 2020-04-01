@@ -23,6 +23,9 @@ export class User {
   @Column({ length: 50 })
   city: string;
 
+  @Column()
+  postalCode: number;
+
   @Column({ length: 20 })
   phone: string;
 }

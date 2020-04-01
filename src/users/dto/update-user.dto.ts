@@ -20,5 +20,8 @@ export class UpdateUserDto {
   city: string;
 
   @ApiPropertyOptional()
+  postalCode: number;
+
+  @ApiPropertyOptional()
   phone: string;
 }
