@@ -12,6 +12,7 @@ export class UserRepository extends Repository<User> {
     user.password = createUserDto.password;
     user.address = createUserDto.address;
     user.city = createUserDto.city;
+    user.postalCode = createUserDto.postalCode;
     user.phone = createUserDto.phone;
 
     return await this.save(user);

@@ -20,5 +20,8 @@ export class CreateUserDto {
   city: string;
   
   @ApiProperty()
+  postalCode: number;
+
+  @ApiProperty()
   phone: string;
 }

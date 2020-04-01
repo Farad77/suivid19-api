@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, TableInheritance } from 'typeorm';
 
 @Entity()
+@TableInheritance({ column: { type: 'varchar', name: 'role' } })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,6 +23,9 @@ export class User {
 
   @Column({ length: 50 })
   city: string;
+
+  @Column()
+  postalCode: number;
 
   @Column({ length: 20 })
   phone: string;
