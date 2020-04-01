@@ -3,6 +3,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { User } from './users.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateResult } from 'typeorm';
 
 @ApiTags('users')
 @Controller('users')
@@ -25,8 +27,8 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() user: CreateUserDto) {
-    return `we update the user with the id ${id}`;
+  update(@Param('id') id: string, @Body() user: UpdateUserDto): Promise<UpdateResult> {
+    return this.usersService.update(id, user);
   }
 
   @Delete(':id')
