@@ -11,7 +11,10 @@ import { DoctorsModule } from './doctors/doctors.module';
 import { AdminsModule } from './admins/admins.module';
 import { MonitorsModule } from './monitors/monitors.module';
 import { TrackingModule } from './tracking/tracking.module';
+import { SymptomsModule } from './symptoms/symptoms.module';
+import { SurveyanswerModule } from './surveyanswer/surveyanswer.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { LabosModule } from './labos/labos.module';
 
 @Module({
   imports: [
@@ -22,9 +25,13 @@ import { NotificationsModule } from './notifications/notifications.module';
     RelativesModule,
     DoctorsModule,
     AdminsModule,
+    TrackingModule,
+    SymptomsModule,
+    SurveyanswerModule,
     MonitorsModule,
     TrackingModule,
-    NotificationsModule
+    NotificationsModule,
+    LabosModule
   ],
   controllers: [AppController],
   providers: [AppService],

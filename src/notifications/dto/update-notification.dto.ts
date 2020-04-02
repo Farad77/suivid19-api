@@ -3,7 +3,7 @@ import { User } from 'src/users/users.entity';
 
 export class UpdateNotificationDto {
   @ApiPropertyOptional()
-  user: User;
+  user: Promise<User>;
 
   @ApiPropertyOptional()
   type: string;

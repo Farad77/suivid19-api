@@ -1,4 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, ManyToMany, OneToOne, JoinColumn } from 'typeorm';
+import { User } from '../users/users.entity';
+import { Patient } from '../patients/patients.entity';
+import { Symptoms } from '../symptoms/symptoms.entity';
 
 @Entity()
 export class Test {
@@ -6,11 +9,23 @@ export class Test {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @OneToOne(type => User)
+  @JoinColumn()
+  carer: Promise<User>;
+
+  @OneToOne(type => Patient)
+  @JoinColumn()
+  patient: Promise<Patient>;
+
   @Column()
   hasCough: boolean;
 
   @Column()
   hasSymptoms: boolean;
+
+  @ManyToMany(type => Symptoms)
+  @JoinTable()
+  symptoms: Promise<Symptoms[]>;
   
   @Column({ length: 255 })
   email: string;

@@ -6,7 +6,7 @@ import { CreateNotificationDto } from './dto/create-notification.dto';
 export class NotificationRepository extends Repository<Notification> {
   async createNotification(createNotificationDto: CreateNotificationDto) {
     const notification = new Notification();
-    notification.user = createNotificationDto.user;
+    notification.user = Promise.resolve(createNotificationDto.user);
     notification.type = createNotificationDto.type;
     notification.text = createNotificationDto.text;
     notification.creationDate = createNotificationDto.creationDate;
