@@ -27,5 +27,5 @@ export class SymptomsService {
           async remove(id: string): Promise<void> {
             await this.symptomRepository.delete(id);
           }
-      }
 }
+
