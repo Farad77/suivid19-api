@@ -1,5 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Test } from './tests.entity';
+import { CreateTestDto } from './dto/create-test.dto';
 
 @EntityRepository(Test)
 export class TestsRepository extends Repository<Test> {
