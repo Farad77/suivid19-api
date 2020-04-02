@@ -7,11 +7,11 @@ import { TestsService } from './tests.service';
 export class TestsRepository extends Repository<Test> {
   async createTest(createTestDto: CreateTestDto) {
     const test = new Test();
-    test.carer = createTestDto.carer;
-    test.patient = createTestDto.patient;
+    test.carer = Promise.resolve(createTestDto.carer);
+    test.patient = Promise.resolve(createTestDto.patient);
     test.hasCough = createTestDto.hasCough;
     test.hasSymptoms = createTestDto.hasSymptoms;
-    test.symptoms = createTestDto.symptoms;
+    test.symptoms = Promise.resolve(createTestDto.symptoms);
     test.email = createTestDto.email;
     test.hasVirus = createTestDto.hasVirus;
     test.hasContactSickPatient = createTestDto.hasContactSickPatient;
