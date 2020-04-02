@@ -1,8 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, TableInheritance ,OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column ,OneToOne } from 'typeorm';
 import { User } from 'src/users/users.entity';
 
 @Entity()
-@TableInheritance({ column: { type: 'varchar', name: 'role' } })
 export class Notification {
   @PrimaryGeneratedColumn()
   id: number;
