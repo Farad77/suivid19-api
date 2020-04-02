@@ -6,7 +6,7 @@ import { Relative } from './relatives.entity';
 export class RelativeRepository extends Repository<Relative> {
   async createRelative(createRelativeDto: CreateRelativeDto) {
     const relative = new Relative();
-    relative.person = Promise.resolve(createRelativeDto.person);
+    relative.patient = Promise.resolve(createRelativeDto.patient);
     relative.relative = Promise.resolve(createRelativeDto.relative);
     relative.type = createRelativeDto.type;
     relative.date = createRelativeDto.date;

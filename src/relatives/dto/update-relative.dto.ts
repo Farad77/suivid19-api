@@ -1,13 +1,13 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { Person } from 'src/persons/persons.entity';
+import { Patient } from 'src/patients/patients.entity';
 import { RelativeType } from '../relatives.entity';
 
 export class UpdateRelativeDto {
   @ApiPropertyOptional()
-  person: Promise<Person>;
+  patient: Promise<Patient>;
 
   @ApiPropertyOptional()
-  relative: Promise<Person>;
+  relative: Promise<Patient>;
 
   @ApiPropertyOptional()
   type: RelativeType;

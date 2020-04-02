@@ -15,7 +15,7 @@ export class CreateTestDto {
   hasVirus: boolean;
 
   @ApiProperty()
-  hasContactSickPerson: boolean;
+  hasContactSickPatient: boolean;
   
   @ApiProperty()
   tempature: number;

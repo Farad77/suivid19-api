@@ -19,7 +19,7 @@ export class Test {
   hasVirus: boolean;
 
   @Column()
-  hasContactSickPerson: boolean;
+  hasContactSickPatient: boolean;
   
   @Column()
   tempature: number;
