@@ -5,7 +5,7 @@ import { UpdateSurveyAnswerDto } from './dto/update-survey-answer.dto';
 import { UpdateResult } from 'typeorm';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('SurveyAnswer')
+@ApiTags('surveyanswer')
 @Controller('surveyanswer')
 export class SurveyanswerController {
 
