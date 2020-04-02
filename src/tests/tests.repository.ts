@@ -10,7 +10,7 @@ export class TestsRepository extends Repository<Test> {
     test.hasSymptoms = createTestDto.hasSymptoms;
     test.email = createTestDto.email;
     test.hasVirus = createTestDto.hasVirus;
-    test.hasContactSickPerson = createTestDto.hasContactSickPerson;
+    test.hasContactSickPatient = createTestDto.hasContactSickPatient;
     test.tempature = createTestDto.tempature;
     test.location = createTestDto.location;
     test.date = createTestDto.date;

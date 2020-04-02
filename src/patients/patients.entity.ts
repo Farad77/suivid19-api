@@ -9,7 +9,7 @@ export enum Gender {
 }
 
 @ChildEntity()
-export class Person extends User {
+export class Patient extends User {
   @Column({ default: 0 })
   birthday: number;
 
@@ -31,6 +31,6 @@ export class Person extends User {
   @Column({ default: false })
   isHospitalized: boolean;
 
-  @OneToMany(type => Relative, relative => relative.person)
+  @OneToMany(type => Relative, relative => relative.patient)
   relatives: Promise<Relative[]>;
 }

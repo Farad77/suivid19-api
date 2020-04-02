@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { Connection } from 'typeorm';
 import { TestsModule } from './tests/tests.module';
-import { PersonsModule } from './persons/persons.module';
+import { PatientsModule } from './patients/patients.module';
 import { RelativesModule } from './relatives/relatives.module';
 import { DoctorsModule } from './doctors/doctors.module';
 import { AdminsModule } from './admins/admins.module';
@@ -18,7 +18,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     TypeOrmModule.forRoot(),
     UsersModule,
     TestsModule,
-    PersonsModule,
+    PatientsModule,
     RelativesModule,
     DoctorsModule,
     AdminsModule,

@@ -1,5 +1,5 @@
 import { Entity, Column, OneToOne, JoinColumn, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Person } from 'src/persons/persons.entity';
+import { Patient } from 'src/patients/patients.entity';
 
 export enum RelativeType {
   OTHER = 0,
@@ -18,12 +18,12 @@ export class Relative {
   @PrimaryGeneratedColumn()
   id: number;
   
-  @ManyToOne(type => Person, person => person.relatives)
-  person: Promise<Person>;
+  @ManyToOne(type => Patient, patient => patient.relatives)
+  patient: Promise<Patient>;
 
-  @OneToOne(type => Person)
+  @OneToOne(type => Patient)
   @JoinColumn()
-  relative: Promise<Person>;
+  relative: Promise<Patient>;
 
   @Column({
     type: 'enum',

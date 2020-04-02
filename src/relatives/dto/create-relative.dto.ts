@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Person } from 'src/persons/persons.entity';
+import { Patient } from 'src/patients/patients.entity';
 import { RelativeType } from '../relatives.entity';
 
 export class CreateRelativeDto {
   @ApiProperty()
-  person: Person;
+  patient: Patient;
 
   @ApiProperty()
-  relative: Person;
+  relative: Patient;
 
   @ApiProperty()
   type: RelativeType;
