@@ -15,7 +15,7 @@ import { AgentsModule } from './agents/agents.module';
   imports: [
     TypeOrmModule.forRoot(),
     UsersModule,
-    TestsModule
+    TestsModule,
     PersonsModule,
     RelativesModule,
     DoctorsModule,
