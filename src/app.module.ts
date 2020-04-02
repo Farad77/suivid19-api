@@ -11,6 +11,8 @@ import { DoctorsModule } from './doctors/doctors.module';
 import { AdminsModule } from './admins/admins.module';
 import { AgentsModule } from './agents/agents.module';
 import { TrackingModule } from './tracking/tracking.module';
+import { SymptomsModule } from './symptoms/symptoms.module';
+import { SurveyanswerModule } from './surveyanswer/surveyanswer.module';
 
 @Module({
   imports: [
@@ -22,7 +24,9 @@ import { TrackingModule } from './tracking/tracking.module';
     DoctorsModule,
     AdminsModule,
     AgentsModule,
-    TrackingModule
+    TrackingModule,
+    SymptomsModule,
+    SurveyanswerModule
   ],
   controllers: [AppController],
   providers: [AppService],

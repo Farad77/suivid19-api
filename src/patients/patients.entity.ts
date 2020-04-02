@@ -1,6 +1,7 @@
 import { ChildEntity, Column, OneToMany } from 'typeorm';
 import { User } from 'src/users/users.entity';
 import { Relative } from 'src/relatives/relatives.entity';
+import { Test } from '../tests/tests.entity';
 
 export enum Gender {
   OTHER = 0,
@@ -33,4 +34,5 @@ export class Patient extends User {
 
   @OneToMany(type => Relative, relative => relative.patient)
   relatives: Promise<Relative[]>;
+
 }
