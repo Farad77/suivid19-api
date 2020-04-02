@@ -3,7 +3,6 @@ import { User } from '../../users/users.entity';
 import { Patient } from '../../patients/patients.entity';
 
 export class CreateTestDto {
-
   @ApiProperty()
   carer: User;
 
