@@ -4,6 +4,7 @@ import { Relative } from 'src/relatives/relatives.entity';
 import { Test } from '../tests/tests.entity';
 import { Ide } from 'src/ides/ides.entity';
 import { Contact } from 'src/contacts/contacts.entity';
+import { Attachment } from 'src/attachments/attachments.entity';
 
 export enum Gender {
   OTHER = 0,
@@ -42,5 +43,8 @@ export class Patient extends User {
 
   @OneToMany(type => Contact, contact => contact.patient)
   contacts: Promise<Contact[]>;
+
+  @OneToMany(type => Attachment, attachment => attachment.patient)
+  attachments: Promise<Attachment[]>;
 
 }

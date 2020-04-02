@@ -17,6 +17,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { LabosModule } from './labos/labos.module';
 import { IdesModule } from './ides/ides.module';
 import { ContactsModule } from './contacts/contacts.module';
+import { AttachmentsModule } from './attachments/attachments.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { ContactsModule } from './contacts/contacts.module';
     NotificationsModule,
     LabosModule,
     IdesModule,
-    ContactsModule
+    ContactsModule,
+    AttachmentsModule
   ],
   controllers: [AppController],
   providers: [AppService],

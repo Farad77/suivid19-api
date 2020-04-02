@@ -9,7 +9,7 @@ import { UpdateResult } from 'typeorm';
 export class PatientsService {
   constructor(private patientsRepository: PatientRepository) { }
 
-  findAll(withRelatives: boolean = false, withIdes: boolean = false, withContacts: boolean = false): Promise<Patient[]> {
+  findAll(withRelatives: boolean = false, withIdes: boolean = false, withContacts: boolean = false, withAttachments: boolean = false): Promise<Patient[]> {
     let relations = [];
 
     if (withRelatives) {
@@ -23,6 +23,10 @@ export class PatientsService {
 
     if (withContacts) {
       relations.push('contacts');
+    }
+
+    if (withAttachments) {
+      relations.push('attachments');
     }
 
     return this.patientsRepository.find({ relations: relations });
@@ -32,7 +36,7 @@ export class PatientsService {
     return this.patientsRepository.createPatient(Patient);
   }
 
-  findOne(id: string, withRelatives: boolean = false, withIdes: boolean = false, withContacts: boolean = false): Promise<Patient> {
+  findOne(id: string, withRelatives: boolean = false, withIdes: boolean = false, withContacts: boolean = false, withAttachments: boolean = false): Promise<Patient> {
     let relations = [];
 
     if (withRelatives) {
@@ -46,6 +50,10 @@ export class PatientsService {
 
     if (withContacts) {
       relations.push('contacts');
+    }
+
+    if (withAttachments) {
+      relations.push('attachments');
     }
 
     return this.patientsRepository.findOne(id, { relations: relations });

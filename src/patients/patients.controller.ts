@@ -30,8 +30,14 @@ export class PatientsController {
     required: false,
     description: 'If enable, contacts will be shown inside each patient. The default value is false.'
   })
-  getAll(@Query('withRelatives') withRelatives, @Query('withIdes') withIdes, @Query('withContacts') withContacts): Promise<Patient[]> {
-    return this.patientsService.findAll(withRelatives && withRelatives == 'true', withIdes && withIdes == 'true', withContacts && withContacts == 'true');
+  @ApiQuery({
+    name: 'withAttachments',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, attachments will be shown inside each patient. The default value is false.'
+  })
+  getAll(@Query('withRelatives') withRelatives, @Query('withIdes') withIdes, @Query('withContacts') withContacts, @Query('withAttachments') withAttachments): Promise<Patient[]> {
+    return this.patientsService.findAll(withRelatives && withRelatives == 'true', withIdes && withIdes == 'true', withContacts && withContacts == 'true', withAttachments && withAttachments == 'true');
   }
 
   @Post()
@@ -58,8 +64,14 @@ export class PatientsController {
     required: false,
     description: 'If enable, contacts will be shown inside each patient. The default value is false.'
   })
-  get(@Param('id') id: string, @Query('withRelatives') withRelatives, @Query('withIdes') withIdes, @Query('withContacts') withContacts): Promise<Patient> {
-    return this.patientsService.findOne(id, withRelatives && withRelatives == 'true', withIdes && withIdes == 'true', withContacts && withContacts == 'true');
+  @ApiQuery({
+    name: 'withAttachments',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, attachments will be shown inside each patient. The default value is false.'
+  })
+  get(@Param('id') id: string, @Query('withRelatives') withRelatives, @Query('withIdes') withIdes, @Query('withContacts') withContacts, @Query('withAttachments') withAttachments): Promise<Patient> {
+    return this.patientsService.findOne(id, withRelatives && withRelatives == 'true', withIdes && withIdes == 'true', withContacts && withContacts == 'true', withAttachments && withAttachments == 'true');
   }
 
   @Put(':id')
