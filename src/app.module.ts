@@ -9,7 +9,7 @@ import { PatientsModule } from './patients/patients.module';
 import { RelativesModule } from './relatives/relatives.module';
 import { DoctorsModule } from './doctors/doctors.module';
 import { AdminsModule } from './admins/admins.module';
-import { AgentsModule } from './agents/agents.module';
+import { MonitorsModule } from './monitors/monitors.module';
 import { TrackingModule } from './tracking/tracking.module';
 
 @Module({
@@ -21,7 +21,7 @@ import { TrackingModule } from './tracking/tracking.module';
     RelativesModule,
     DoctorsModule,
     AdminsModule,
-    AgentsModule,
+    MonitorsModule,
     TrackingModule
   ],
   controllers: [AppController],
