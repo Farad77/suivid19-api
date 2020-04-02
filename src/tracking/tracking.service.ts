@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Tracking } from './Tracking.entity';
-import { TrackingRepository } from './Tracking.repository';
+import { Tracking } from './tracking.entity';
+import { TrackingRepository } from './tracking.repository';
 import { CreateTrackingDto } from './dto/create-tracking.dto';
 import { UpdateTrackingDto } from './dto/update-tracking.dto';
 import { UpdateResult } from 'typeorm';
