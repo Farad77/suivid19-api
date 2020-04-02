@@ -10,7 +10,7 @@ export class RelativesService {
   constructor(private relativesRepository: RelativeRepository) { }
 
   findAll(): Promise<Relative[]> {
-    return this.relativesRepository.find();
+    return this.relativesRepository.find({ relations: ['person', 'relative'] });
   }
 
   create(Relative: CreateRelativeDto): Promise<Relative> {
@@ -18,7 +18,7 @@ export class RelativesService {
   }
 
   findOne(id: string): Promise<Relative> {
-    return this.relativesRepository.findOne(id);
+    return this.relativesRepository.findOne(id, { relations: ['person', 'relative'] });
   }
 
   update(id: string, updateRelativeDto: UpdateRelativeDto): Promise<UpdateResult> {
