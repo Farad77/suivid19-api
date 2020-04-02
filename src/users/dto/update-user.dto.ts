@@ -24,4 +24,7 @@ export class UpdateUserDto {
 
   @ApiPropertyOptional()
   phone: string;
+
+  @ApiPropertyOptional()
+  isActive: boolean;
 }

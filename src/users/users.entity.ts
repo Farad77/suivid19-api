@@ -31,4 +31,7 @@ export class User {
   @Column({ length: 20 })
   phone: string;
 
+  @Column({ default: true })
+  isActive: boolean;
+
 }
