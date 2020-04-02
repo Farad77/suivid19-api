@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { User } from '../../users/users.entity';
 import { Patient } from '../../patients/patients.entity';
+import { Symptoms } from '../../symptoms/symptoms.entity';
 
 export class CreateTestDto {
   @ApiProperty()
