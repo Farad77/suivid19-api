@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'src/users/users.entity';
-import { Relative } from 'src/relatives/relatives.entity';
+import { Patient } from 'src/patients/patients.entity';
 
 export class CreateTrackingDto {
   @ApiProperty()
-  carer: User;
+  patient: Promise<Patient>;
 
   @ApiProperty()
-  newRelatives: Array<Relative>;
+  carer: Promise<User>;
 
   @ApiProperty()
   alertLevel: number;
