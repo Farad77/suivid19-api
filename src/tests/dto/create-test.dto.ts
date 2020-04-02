@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../../users/users.entity';
 import { Patient } from '../../patients/patients.entity';
 import { Symptoms } from '../../symptoms/symptoms.entity';

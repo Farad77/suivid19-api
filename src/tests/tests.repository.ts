@@ -11,6 +11,7 @@ export class TestsRepository extends Repository<Test> {
     test.patient = createTestDto.patient;
     test.hasCough = createTestDto.hasCough;
     test.hasSymptoms = createTestDto.hasSymptoms;
+    test.symptoms = createTestDto.symptoms;
     test.email = createTestDto.email;
     test.hasVirus = createTestDto.hasVirus;
     test.hasContactSickPatient = createTestDto.hasContactSickPatient;
