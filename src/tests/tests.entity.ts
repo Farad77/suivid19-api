@@ -11,11 +11,11 @@ export class Test {
 
   @OneToOne(type => User)
   @JoinColumn()
-  carer: User;
+  carer: Promise<User>;
 
   @OneToOne(type => Patient)
   @JoinColumn()
-  patient: Patient;
+  patient: Promise<Patient>;
 
   @Column()
   hasCough: boolean;
