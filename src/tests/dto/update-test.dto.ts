@@ -1,4 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { User } from "../../users/users.entity";
+import { Patient } from "../../patients/patients.entity";
 
 export class UpdateTestDto {
     @ApiPropertyOptional()
@@ -13,6 +15,9 @@ export class UpdateTestDto {
     @ApiPropertyOptional()
     hasSymptoms: boolean;
     
+    @ApiPropertyOptional()
+    symptoms: Symptoms[];
+
     @ApiPropertyOptional()
     email: string;
   

@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { User } from '../../users/users.entity';
 import { Patient } from '../../patients/patients.entity';
 
@@ -14,6 +14,9 @@ export class CreateTestDto {
 
   @ApiProperty()
   hasSymptoms: boolean;
+
+  @ApiProperty()
+  symptoms: Symptoms[];
   
   @ApiProperty()
   email: string;
