@@ -10,6 +10,7 @@ import { RelativesModule } from './relatives/relatives.module';
 import { DoctorsModule } from './doctors/doctors.module';
 import { AdminsModule } from './admins/admins.module';
 import { AgentsModule } from './agents/agents.module';
+import { TrackingModule } from './tracking/tracking.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { AgentsModule } from './agents/agents.module';
     RelativesModule,
     DoctorsModule,
     AdminsModule,
-    AgentsModule
+    AgentsModule,
+    TrackingModule
   ],
   controllers: [AppController],
   providers: [AppService],
