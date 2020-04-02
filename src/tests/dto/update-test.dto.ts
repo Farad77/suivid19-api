@@ -5,10 +5,10 @@ import { Symptoms } from "../../symptoms/symptoms.entity";
 
 export class UpdateTestDto {
     @ApiPropertyOptional()
-    carer: User;
+    carer: Promise<User>;
   
     @ApiPropertyOptional()
-    patient: Patient;
+    patient: Promise<Patient>;
   
     @ApiPropertyOptional()
     hasCough: boolean;
@@ -17,7 +17,7 @@ export class UpdateTestDto {
     hasSymptoms: boolean;
     
     @ApiPropertyOptional()
-    symptoms: Symptoms[];
+    symptoms: Promise<Symptoms[]>;
 
     @ApiPropertyOptional()
     email: string;
