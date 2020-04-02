@@ -25,7 +25,7 @@ export class Test {
 
   @ManyToMany(type => Symptoms)
   @JoinTable()
-  symptoms: Symptoms[];
+  symptoms: Promise<Symptoms[]>;
   
   @Column({ length: 255 })
   email: string;
