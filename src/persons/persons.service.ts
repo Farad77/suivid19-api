@@ -9,16 +9,16 @@ import { UpdateResult } from 'typeorm';
 export class PersonsService {
   constructor(private personsRepository: PersonRepository) { }
 
-  findAll(): Promise<Person[]> {
-    return this.personsRepository.find();
+  findAll(withRelatives: boolean = false): Promise<Person[]> {
+    return this.personsRepository.find({ relations: withRelatives && ['relatives', 'relatives.relative'] });
   }
 
   create(Person: CreatePersonDto): Promise<Person> {
     return this.personsRepository.createPerson(Person);
   }
 
-  findOne(id: string): Promise<Person> {
-    return this.personsRepository.findOne(id);
+  findOne(id: string, withRelatives: boolean = false): Promise<Person> {
+    return this.personsRepository.findOne(id, { relations: withRelatives && ['relatives', 'relatives.relative'] });
   }
 
   update(id: string, updatePersonDto: UpdatePersonDto): Promise<UpdateResult> {

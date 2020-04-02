@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query } from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiQuery } from '@nestjs/swagger';
 import { PersonsService } from './persons.service';
 import { Person } from './persons.entity';
 import { UpdatePersonDto } from './dto/update-person.dto';
@@ -12,8 +12,14 @@ export class PersonsController {
   constructor(private personsService: PersonsService) { }
 
   @Get()
-  getAll(): Promise<Person[]> {
-    return this.personsService.findAll();
+  @ApiQuery({
+    name: 'withRelatives',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, relatives will be shown inside each person. The default value is false.'
+  })
+  getAll(@Query('withRelatives') withRelatives): Promise<Person[]> {
+    return this.personsService.findAll(withRelatives && withRelatives == 'true');
   }
 
   @Post()
@@ -22,8 +28,14 @@ export class PersonsController {
   }
 
   @Get(':id')
-  get(@Param('id') id: string): Promise<Person> {
-    return this.personsService.findOne(id);
+  @ApiQuery({
+    name: 'withRelatives',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, relatives will be shown inside each person. The default value is false.'
+  })
+  get(@Param('id') id: string, @Query('withRelatives') withRelatives): Promise<Person> {
+    return this.personsService.findOne(id, withRelatives && withRelatives == 'true');
   }
 
   @Put(':id')
