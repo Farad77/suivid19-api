@@ -13,3 +13,4 @@ export class SurveyAnswerRepository extends Repository<SurveyAnswer> {
 
     return await this.save(surveyAnswer);
   }
+}
