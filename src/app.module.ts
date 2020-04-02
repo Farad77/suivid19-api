@@ -12,6 +12,7 @@ import { AdminsModule } from './admins/admins.module';
 import { MonitorsModule } from './monitors/monitors.module';
 import { TrackingModule } from './tracking/tracking.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { LabosModule } from './labos/labos.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { NotificationsModule } from './notifications/notifications.module';
     AdminsModule,
     MonitorsModule,
     TrackingModule,
-    NotificationsModule
+    NotificationsModule,
+    LabosModule
   ],
   controllers: [AppController],
   providers: [AppService],
