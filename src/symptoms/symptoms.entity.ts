@@ -13,7 +13,7 @@ export class Symptoms {
     @Column({length : 255})
     description: string;
 
-    @Column
+    @Column()
     alertLevel : number;
 
 }
