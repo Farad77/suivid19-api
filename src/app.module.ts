@@ -15,6 +15,7 @@ import { SymptomsModule } from './symptoms/symptoms.module';
 import { SurveyanswerModule } from './surveyanswer/surveyanswer.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { LabosModule } from './labos/labos.module';
+import { IdesModule } from './ides/ides.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { LabosModule } from './labos/labos.module';
     MonitorsModule,
     TrackingModule,
     NotificationsModule,
-    LabosModule
+    LabosModule,
+    IdesModule
   ],
   controllers: [AppController],
   providers: [AppService],

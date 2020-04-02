@@ -2,6 +2,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Gender } from '../patients.entity';
 import { Relative } from 'src/relatives/relatives.entity';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
+import { Ide } from 'src/ides/ides.entity';
 
 export class UpdatePatientDto extends UpdateUserDto {
   @ApiPropertyOptional()
@@ -24,4 +25,7 @@ export class UpdatePatientDto extends UpdateUserDto {
 
   @ApiPropertyOptional()
   relatives: Promise<Relative[]>;
+
+  @ApiPropertyOptional()
+  ides: Promise<Ide[]>;
 }

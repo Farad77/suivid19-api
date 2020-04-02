@@ -9,16 +9,38 @@ import { UpdateResult } from 'typeorm';
 export class PatientsService {
   constructor(private patientsRepository: PatientRepository) { }
 
-  findAll(withRelatives: boolean = false): Promise<Patient[]> {
-    return this.patientsRepository.find({ relations: withRelatives && ['relatives', 'relatives.relative'] });
+  findAll(withRelatives: boolean = false, withIdes: boolean = false): Promise<Patient[]> {
+    let relations = [];
+
+    if (withRelatives) {
+      relations.push('relatives');
+      relations.push('relatives.relative');
+    }
+
+    if (withIdes) {
+      relations.push('ides');
+    }
+
+    return this.patientsRepository.find({ relations: relations });
   }
 
   create(Patient: CreatePatientDto): Promise<Patient> {
     return this.patientsRepository.createPatient(Patient);
   }
 
-  findOne(id: string, withRelatives: boolean = false): Promise<Patient> {
-    return this.patientsRepository.findOne(id, { relations: withRelatives && ['relatives', 'relatives.relative'] });
+  findOne(id: string, withRelatives: boolean = false, withIdes: boolean = false): Promise<Patient> {
+    let relations = [];
+
+    if (withRelatives) {
+      relations.push('relatives');
+      relations.push('relatives.relative');
+    }
+
+    if (withIdes) {
+      relations.push('ides');
+    }
+
+    return this.patientsRepository.findOne(id, { relations: relations });
   }
 
   update(id: string, updatePatientDto: UpdatePatientDto): Promise<UpdateResult> {

@@ -21,7 +21,4 @@ export class CreatePatientDto extends CreateUserDto {
 
   @ApiProperty()
   isHospitalized: boolean;
-
-  @ApiPropertyOptional()
-  relatives: Relative[];
 }

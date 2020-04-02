@@ -20,7 +20,6 @@ export class PatientRepository extends Repository<Patient> {
     patient.gender = createPatientDto.gender;
     patient.isGeolocated = createPatientDto.isGeolocated;
     patient.isHospitalized = createPatientDto.isHospitalized;
-    patient.relatives = Promise.resolve(createPatientDto.relatives);
 
     return await this.save(patient);
   }
