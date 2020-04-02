@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { Connection } from 'typeorm';
+import { TestsModule } from './tests/tests.module';
 import { PersonsModule } from './persons/persons.module';
 import { RelativesModule } from './relatives/relatives.module';
 import { DoctorsModule } from './doctors/doctors.module';
@@ -14,6 +15,7 @@ import { AgentsModule } from './agents/agents.module';
   imports: [
     TypeOrmModule.forRoot(),
     UsersModule,
+    TestsModule,
     PersonsModule,
     RelativesModule,
     DoctorsModule,
