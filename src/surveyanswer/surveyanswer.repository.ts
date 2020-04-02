@@ -4,7 +4,7 @@ import { CreateSurveyAnswerDto } from "./dto/create-survey-answer.dto";
 
 @EntityRepository(SurveyAnswer)
 export class SurveyAnswerRepository extends Repository<SurveyAnswer> {
-  async createTest(createSurveyAnswer: CreateSurveyAnswerDto) {
+  async createSurveyAnswer(createSurveyAnswer: CreateSurveyAnswerDto) {
     const surveyAnswer = new SurveyAnswer();
     surveyAnswer.answer = createSurveyAnswer.answer;
    //surveyAnswer.survey = createSurveyAnswer.survey;
