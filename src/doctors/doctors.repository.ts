@@ -14,6 +14,7 @@ export class DoctorRepository extends Repository<Doctor> {
     doctor.city = createDoctorDto.city;
     doctor.postalCode = createDoctorDto.postalCode;
     doctor.phone = createDoctorDto.phone;
+    doctor.isPersonnal = createDoctorDto.isPersonnal;
 
     return await this.save(doctor);
   }

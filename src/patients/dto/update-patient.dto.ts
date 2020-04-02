@@ -5,6 +5,7 @@ import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { Ide } from 'src/ides/ides.entity';
 import { Contact } from 'src/contacts/contacts.entity';
 import { Attachment } from 'src/attachments/attachments.entity';
+import { Doctor } from 'src/doctors/doctors.entity';
 
 export class UpdatePatientDto extends UpdateUserDto {
   @ApiPropertyOptional()
@@ -36,4 +37,7 @@ export class UpdatePatientDto extends UpdateUserDto {
 
   @ApiPropertyOptional()
   attachments: Promise<Attachment[]>;
+
+  @ApiPropertyOptional()
+  doctor: Promise<Doctor>;
 }

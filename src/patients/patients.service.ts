@@ -10,7 +10,7 @@ export class PatientsService {
   constructor(private patientsRepository: PatientRepository) { }
 
   findAll(withRelatives: boolean = false, withIdes: boolean = false, withContacts: boolean = false, withAttachments: boolean = false): Promise<Patient[]> {
-    let relations = [];
+    let relations = ['doctor'];
 
     if (withRelatives) {
       relations.push('relatives');
@@ -37,7 +37,7 @@ export class PatientsService {
   }
 
   findOne(id: string, withRelatives: boolean = false, withIdes: boolean = false, withContacts: boolean = false, withAttachments: boolean = false): Promise<Patient> {
-    let relations = [];
+    let relations = ['doctor'];
 
     if (withRelatives) {
       relations.push('relatives');
