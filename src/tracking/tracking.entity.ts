@@ -1,17 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column , OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column , OneToOne, JoinColumn } from 'typeorm';
 import { User } from 'src/users/users.entity';
-import { Relative } from 'src/relatives/relatives.entity';
+import { Patient } from 'src/patients/patients.entity';
 
 @Entity()
 export class Tracking {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(User => User)
-    carer: User;
+    @OneToOne(type => Patient)
+    @JoinColumn()
+    patient: Promise<Patient>;
 
-    @OneToOne(Relative => Relative)
-    newRelatives: Array<Relative>;
+    @OneToOne(type => User)
+    @JoinColumn()
+    carer: Promise<User>;
 
     @Column()
     alertLevel: number;

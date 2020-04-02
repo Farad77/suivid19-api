@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, TableInheritance ,OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, TableInheritance ,OneToOne, JoinColumn } from 'typeorm';
 import { User } from 'src/users/users.entity';
 
 @Entity()
@@ -7,8 +7,9 @@ export class Notification {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(User => User)
-  user: User;
+  @OneToOne(type => User)
+  @JoinColumn()
+  user: Promise<User>;
 
   @Column({ length: 50 })
   type: string;

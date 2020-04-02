@@ -6,8 +6,8 @@ import { CreateTrackingDto } from './dto/create-tracking.dto';
 export class TrackingRepository extends Repository<Tracking> {
   async createTracking(createTrackingDto: CreateTrackingDto) {
     const tracking = new Tracking();
-    tracking.carer = createTrackingDto.carer;
-    tracking.newRelatives = createTrackingDto.newRelatives;
+    tracking.patient = Promise.resolve(createTrackingDto.patient);
+    tracking.carer = Promise.resolve(createTrackingDto.carer);
     tracking.alertLevel = createTrackingDto.alertLevel;
     tracking.location = createTrackingDto.location;
     tracking.date = createTrackingDto.date;
