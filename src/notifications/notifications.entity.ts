@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, TableInheritance } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, TableInheritance ,OneToOne } from 'typeorm';
 import { User } from 'src/users/users.entity';
 
 @Entity()
@@ -7,7 +7,7 @@ export class Notification {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @OneToOne(User => User)
   user: User;
 
   @Column({ length: 50 })

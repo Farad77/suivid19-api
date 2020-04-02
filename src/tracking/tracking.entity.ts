@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column , OneToOne } from 'typeorm';
 import { User } from 'src/users/users.entity';
 import { Relative } from 'src/relatives/relatives.entity';
 
@@ -7,10 +7,10 @@ export class Tracking {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @OneToOne(User => User)
     carer: User;
 
-    @Column()
+    @OneToOne(Relative => Relative)
     newRelatives: Array<Relative>;
 
     @Column()
