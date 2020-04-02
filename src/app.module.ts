@@ -11,6 +11,7 @@ import { DoctorsModule } from './doctors/doctors.module';
 import { AdminsModule } from './admins/admins.module';
 import { AgentsModule } from './agents/agents.module';
 import { TrackingModule } from './tracking/tracking.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { TrackingModule } from './tracking/tracking.module';
     DoctorsModule,
     AdminsModule,
     AgentsModule,
-    TrackingModule
+    TrackingModule,
+    NotificationsModule
   ],
   controllers: [AppController],
   providers: [AppService],
