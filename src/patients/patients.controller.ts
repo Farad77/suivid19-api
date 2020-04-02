@@ -24,8 +24,14 @@ export class PatientsController {
     required: false,
     description: 'If enable, ides will be shown inside each patient. The default value is false.'
   })
-  getAll(@Query('withRelatives') withRelatives, @Query('withIdes') withIdes): Promise<Patient[]> {
-    return this.patientsService.findAll(withRelatives && withRelatives == 'true', withIdes && withIdes == 'true');
+  @ApiQuery({
+    name: 'withContacts',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, contacts will be shown inside each patient. The default value is false.'
+  })
+  getAll(@Query('withRelatives') withRelatives, @Query('withIdes') withIdes, @Query('withContacts') withContacts): Promise<Patient[]> {
+    return this.patientsService.findAll(withRelatives && withRelatives == 'true', withIdes && withIdes == 'true', withContacts && withContacts == 'true');
   }
 
   @Post()
@@ -46,8 +52,14 @@ export class PatientsController {
     required: false,
     description: 'If enable, ides will be shown inside each patient. The default value is false.'
   })
-  get(@Param('id') id: string, @Query('withRelatives') withRelatives, @Query('withIdes') withIdes): Promise<Patient> {
-    return this.patientsService.findOne(id, withRelatives && withRelatives == 'true', withIdes && withIdes == 'true');
+  @ApiQuery({
+    name: 'withContacts',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, contacts will be shown inside each patient. The default value is false.'
+  })
+  get(@Param('id') id: string, @Query('withRelatives') withRelatives, @Query('withIdes') withIdes, @Query('withContacts') withContacts): Promise<Patient> {
+    return this.patientsService.findOne(id, withRelatives && withRelatives == 'true', withIdes && withIdes == 'true', withContacts && withContacts == 'true');
   }
 
   @Put(':id')

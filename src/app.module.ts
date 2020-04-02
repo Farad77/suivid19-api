@@ -16,6 +16,7 @@ import { SurveyanswerModule } from './surveyanswer/surveyanswer.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { LabosModule } from './labos/labos.module';
 import { IdesModule } from './ides/ides.module';
+import { ContactsModule } from './contacts/contacts.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { IdesModule } from './ides/ides.module';
     TrackingModule,
     NotificationsModule,
     LabosModule,
-    IdesModule
+    IdesModule,
+    ContactsModule
   ],
   controllers: [AppController],
   providers: [AppService],
