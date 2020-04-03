@@ -5,6 +5,8 @@ import { User } from './users.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from 'src/roles.decorator';
+import { RolesGuard } from 'src/roles.guard';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -14,6 +16,8 @@ export class UsersController {
   constructor(private usersService: UsersService) { }
   
   @Get()
+  @Roles('Admin')
+  @UseGuards(RolesGuard)
   getAll(): Promise<User[]> {
     return this.usersService.findAll();
   }

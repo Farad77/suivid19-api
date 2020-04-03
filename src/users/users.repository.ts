@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, getManager } from 'typeorm';
 import { User } from './users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 
@@ -16,5 +16,18 @@ export class UserRepository extends Repository<User> {
     user.phone = createUserDto.phone;
 
     return await this.save(user);
+  }
+
+  async getRoleById(id: string) {
+    return 'Admin';
+    // TODO: récupérer le role
+    const entityManager = getManager(); // you can also get it via getConnection().manager
+    const { role } = await entityManager.createQueryBuilder()
+      .select('User.role', 'role')
+      .from(User, 'user')
+      .where('user.id = :id', { id: id })
+      .getRawOne();
+
+    return role;
   }
 }

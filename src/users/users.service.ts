@@ -32,4 +32,8 @@ export class UsersService {
   findByEmail(email: string): Promise<User | undefined> {
     return this.usersRepository.findOne({ email: email });
   }
+
+  getRole(id: string): Promise<string> {
+    return this.usersRepository.getRoleById(id);
+  }
 }
