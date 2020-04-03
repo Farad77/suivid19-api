@@ -19,15 +19,8 @@ export class UserRepository extends Repository<User> {
   }
 
   async getRoleById(id: string) {
-    return 'Admin';
-    // TODO: récupérer le role
-    const entityManager = getManager(); // you can also get it via getConnection().manager
-    const { role } = await entityManager.createQueryBuilder()
-      .select('User.role', 'role')
-      .from(User, 'user')
-      .where('user.id = :id', { id: id })
-      .getRawOne();
+    const role = getManager().query('select "user".role from public."user" where id = $1', [id]);
 
-    return role;
+    return role.then(users => users[0] && users[0].role || 'Unknown');
   }
 }
