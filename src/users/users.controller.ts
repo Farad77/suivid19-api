@@ -16,8 +16,6 @@ export class UsersController {
   constructor(private usersService: UsersService) { }
   
   @Get()
-  @Roles('Admin')
-  @UseGuards(RolesGuard)
   getAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
