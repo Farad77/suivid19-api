@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('Suivid19 API')
     .setDescription('Description de l\'API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('', app, document, {

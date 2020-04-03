@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { CreateNotificationDto } from './dto/create-notification.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { NotificationsService } from './notifications.service';
 import { Notification } from './notifications.entity';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
@@ -8,6 +8,7 @@ import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('notifications')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('notifications')
 export class NotificationsController {

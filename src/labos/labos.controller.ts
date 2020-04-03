@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { CreateLaboDto } from './dto/create-labo.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { LabosService } from './labos.service';
 import { Labo } from './labos.entity';
 import { UpdateLaboDto } from './dto/update-labo.dto';
@@ -8,6 +8,7 @@ import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('labos')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('labos')
 export class LabosController {

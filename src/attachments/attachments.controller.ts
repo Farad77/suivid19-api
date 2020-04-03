@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { CreateAttachmentDto } from './dto/create-attachment.dto';
-import { ApiTags, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { AttachmentsService } from './attachments.service';
 import { Attachment } from './attachments.entity';
 import { UpdateAttachmentDto } from './dto/update-attachment.dto';
@@ -8,6 +8,7 @@ import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('attachments')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('attachments')
 export class AttachmentsController {

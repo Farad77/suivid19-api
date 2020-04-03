@@ -1,12 +1,13 @@
 import { Controller, Get, Body, Param, Put, Delete, UseGuards } from '@nestjs/common';
 import { Test } from './tests.entity';
 import { TestsService } from './tests.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UpdateResult } from 'typeorm';
 import { UpdateTestDto }from './dto/update-test.dto'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('tests')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('tests')
 export class TestsController {

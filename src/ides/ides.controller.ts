@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { CreateIdeDto } from './dto/create-ide.dto';
-import { ApiTags, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { IdesService } from './ides.service';
 import { Ide } from './ides.entity';
 import { UpdateIdeDto } from './dto/update-ide.dto';
@@ -8,6 +8,7 @@ import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('ides')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('ides')
 export class IdesController {

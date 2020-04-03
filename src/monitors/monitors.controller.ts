@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { CreateMonitorDto } from './dto/create-monitor.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { MonitorsService } from './monitors.service';
 import { Monitor } from './monitors.entity';
 import { UpdateMonitorDto } from './dto/update-monitor.dto';
@@ -8,6 +8,7 @@ import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('monitors')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('monitors')
 export class MonitorsController {

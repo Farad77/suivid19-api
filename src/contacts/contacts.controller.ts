@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { CreateContactDto } from './dto/create-contact.dto';
-import { ApiTags, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { ContactsService } from './contacts.service';
 import { Contact } from './contacts.entity';
 import { UpdateContactDto } from './dto/update-contact.dto';
@@ -8,6 +8,7 @@ import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('contacts')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('contacts')
 export class ContactsController {

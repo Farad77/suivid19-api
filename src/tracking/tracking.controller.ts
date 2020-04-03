@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { CreateTrackingDto } from './dto/create-tracking.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { TrackingService } from './tracking.service';
 import { Tracking } from './tracking.entity';
 import { UpdateTrackingDto } from './dto/update-tracking.dto';
@@ -8,6 +8,7 @@ import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('tracking')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('tracking')
 export class TrackingController {
