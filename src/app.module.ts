@@ -18,6 +18,7 @@ import { LabosModule } from './labos/labos.module';
 import { IdesModule } from './ides/ides.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { AttachmentsModule } from './attachments/attachments.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -37,7 +38,8 @@ import { AttachmentsModule } from './attachments/attachments.module';
     LabosModule,
     IdesModule,
     ContactsModule,
-    AttachmentsModule
+    AttachmentsModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
