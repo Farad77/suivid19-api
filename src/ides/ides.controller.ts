@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { CreateIdeDto } from './dto/create-ide.dto';
 import { ApiTags, ApiQuery } from '@nestjs/swagger';
 import { IdesService } from './ides.service';
 import { Ide } from './ides.entity';
 import { UpdateIdeDto } from './dto/update-ide.dto';
 import { UpdateResult } from 'typeorm';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('ides')
+@UseGuards(JwtAuthGuard)
 @Controller('ides')
 export class IdesController {
   constructor(private idesService: IdesService) { }

@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { User } from './users.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateResult } from 'typeorm';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('users')
+@UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) { }

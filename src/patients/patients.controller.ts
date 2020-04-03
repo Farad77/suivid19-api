@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { ApiTags, ApiQuery } from '@nestjs/swagger';
 import { PatientsService } from './patients.service';
 import { Patient } from './patients.entity';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { UpdateResult } from 'typeorm';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('patients')
+@UseGuards(JwtAuthGuard)
 @Controller('patients')
 export class PatientsController {
   constructor(private patientsService: PatientsService) { }

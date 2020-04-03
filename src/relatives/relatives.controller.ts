@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { CreateRelativeDto } from './dto/create-relative.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { RelativesService } from './relatives.service';
 import { Relative } from './relatives.entity';
 import { UpdateRelativeDto } from './dto/update-relative.dto';
 import { UpdateResult } from 'typeorm';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('relatives')
+@UseGuards(JwtAuthGuard)
 @Controller('relatives')
 export class RelativesController {
   constructor(private relativesService: RelativesService) { }

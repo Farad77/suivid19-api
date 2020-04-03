@@ -1,11 +1,13 @@
-import { Controller, Get, Param, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Body, Put, Delete, UseGuards } from '@nestjs/common';
 import { SymptomsService } from './symptoms.service';
 import { Symptoms } from './symptoms.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateResult } from 'typeorm';
 import { UpdateSymptomDto } from './dto/update-symptoms.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('symptoms')
+@UseGuards(JwtAuthGuard)
 @Controller('symptoms')
 export class SymptomsController {
 
