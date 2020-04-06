@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Delete, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Param, UseGuards, Body } from '@nestjs/common';
 import { SurveychoicesRepository } from './surveychoices.repository';
 import { SurveychoicesService } from './surveychoices.service';
 import { Surveychoices } from './surveychoices.entity';
