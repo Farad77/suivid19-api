@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import { Test } from "../tests/tests.entity";
+import { Survey } from "../survey/survey.entity";
 
 @Entity()
 export class SurveyAnswer{
@@ -10,9 +11,9 @@ export class SurveyAnswer{
     @Column({length : 255})
     answer : string;
 
-    /*@OneToOne(type => Survey)
+    @OneToOne(type => Survey)
     @JoinColumn()
-    survey: Survey;*/
+    survey: Survey;
 
     @OneToOne(type => Test)
     @JoinColumn()

@@ -19,6 +19,9 @@ import { IdesModule } from './ides/ides.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { AttachmentsModule } from './attachments/attachments.module';
 import { AuthModule } from './auth/auth.module';
+import { SurveyModule } from './survey/survey.module';
+import { SurveycategorieModule } from './surveycategorie/surveycategorie.module';
+import { SurveychoicesModule } from './surveychoices/surveychoices.module';
 
 @Module({
   imports: [
@@ -39,7 +42,10 @@ import { AuthModule } from './auth/auth.module';
     IdesModule,
     ContactsModule,
     AttachmentsModule,
-    AuthModule
+    AuthModule,
+    SurveyModule,
+    SurveycategorieModule,
+    SurveychoicesModule
   ],
   controllers: [AppController],
   providers: [AppService],

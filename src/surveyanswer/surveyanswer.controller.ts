@@ -4,7 +4,7 @@ import { SurveyAnswer } from './surveyanswer.entity';
 import { UpdateSurveyAnswerDto } from './dto/update-survey-answer.dto';
 import { UpdateResult } from 'typeorm';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('surveyanswer')
 @ApiBearerAuth()
