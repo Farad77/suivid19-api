@@ -13,11 +13,11 @@ export class SurveyAnswer{
 
     @OneToOne(type => Survey)
     @JoinColumn()
-    survey: Survey;
+    survey: Promise<Survey>;
 
     @OneToOne(type => Test)
     @JoinColumn()
-    test: Test;
+    test: Promise<Test>;
 
     
 

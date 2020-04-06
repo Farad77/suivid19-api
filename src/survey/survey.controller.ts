@@ -4,6 +4,7 @@ import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Survey } from './survey.entity';
 import { UpdateSurvey } from './dto/update-survey.dto'
+import { SurveyService } from './survey.service';
 
 @ApiTags('survey')
 @ApiBearerAuth()
