@@ -6,9 +6,9 @@ export class UpdateSurveyAnswerDto {
     @ApiPropertyOptional()
     answer: string;
   
-   /* @ApiPropertyOptional()
-    survey: Survey;*/
+    @ApiPropertyOptional()
+    survey: Promise<Survey>;
   
     @ApiPropertyOptional()
-    test: Test;
+    test: Promise<Test>;
   }
