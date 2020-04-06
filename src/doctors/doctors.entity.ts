@@ -7,6 +7,6 @@ export class Doctor extends User {
   @OneToMany(type => Patient, patient => patient.doctor)
   patients: Promise<Patient[]>;
 
-  @Column()
+  @Column({ default: false })
   isPersonnal: boolean;
 }

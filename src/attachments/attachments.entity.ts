@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Patient } from 'src/patients/patients.entity';
 
 @Entity()
@@ -7,6 +7,7 @@ export class Attachment {
   id: number;
 
   @ManyToOne(type => Patient, patient => patient.attachments)
+  @JoinColumn({ name: 'patientId' })
   patient: Promise<Patient>;
 
   @Column({ length: 100 })

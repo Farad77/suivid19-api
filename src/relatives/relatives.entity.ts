@@ -19,10 +19,11 @@ export class Relative {
   id: number;
   
   @ManyToOne(type => Patient, patient => patient.relatives)
+  @JoinColumn({ name: 'patientId' })
   patient: Promise<Patient>;
 
   @OneToOne(type => Patient)
-  @JoinColumn()
+  @JoinColumn({ name: 'relativeId' })
   relative: Promise<Patient>;
 
   @Column({
