@@ -7,6 +7,7 @@ import { UpdatePatientDto } from './dto/update-patient.dto';
 import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { NewContactsDto } from './dto/new-contacts.dto';
+import { RemoveContactsDto } from './dto/remove-contacts.dto';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -87,9 +88,14 @@ export class PatientsController {
   remove(@Param('id') id: string): Promise<void> {
     return this.patientsService.remove(id);
   }
-
+  
   @Post(':id/add/contacts')
   newContacts(@Param('id') id: string, @Body() newContactsDto: NewContactsDto): Promise<void> {
     return this.patientsService.newContacts(id, newContactsDto);
+  }
+
+  @Delete(':id/del/contacts')
+  removeContacts(@Param('id') id: string, @Body() removeContactsDto: RemoveContactsDto): Promise<void> {
+    return this.patientsService.removeContacts(id, removeContactsDto);
   }
 }

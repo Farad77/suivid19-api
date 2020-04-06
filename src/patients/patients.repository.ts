@@ -4,6 +4,7 @@ import { CreatePatientDto } from './dto/create-patient.dto';
 import { NewContactsDto } from './dto/new-contacts.dto';
 import { Contact } from 'src/contacts/contacts.entity';
 import { ContactRepository } from 'src/contacts/contacts.repository';
+import { RemoveContactsDto } from './dto/remove-contacts.dto';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
@@ -49,5 +50,17 @@ export class PatientRepository extends Repository<Patient> {
       await this.contactRepository.save(contact);
       // TODO: manage error : return 500 if there is error
     });
+  }
+
+  async removeContacts(id: string, removeContactsDto: RemoveContactsDto) {
+    await this.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Contact)
+      .where('"id" IN (:...ids) AND "patientId" = :patient', {
+        ids: removeContactsDto.contacts.map(removeContactDto => removeContactDto.id),
+        patient: id,
+      })
+      .execute();
   }
 }
