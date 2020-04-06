@@ -22,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
 import { SurveyModule } from './survey/survey.module';
 import { SurveycategorieModule } from './surveycategorie/surveycategorie.module';
 import { SurveychoicesModule } from './surveychoices/surveychoices.module';
+import { NotificationModelModule } from './notification-model/notification-model.module';
 
 @Module({
   imports: [
@@ -45,7 +46,8 @@ import { SurveychoicesModule } from './surveychoices/surveychoices.module';
     AuthModule,
     SurveyModule,
     SurveycategorieModule,
-    SurveychoicesModule
+    SurveychoicesModule,
+    NotificationModelModule
   ],
   controllers: [AppController],
   providers: [AppService],
