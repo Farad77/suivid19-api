@@ -6,6 +6,7 @@ import { CreateContactDto } from './dto/create-contact.dto';
 export class ContactRepository extends Repository<Contact> {
   async createContact(createContactDto: CreateContactDto) {
     const contact = new Contact();
+    contact.patient = createContactDto.patient;
     contact.firstName = createContactDto.firstName;
     contact.lastName = createContactDto.lastName;
     contact.phone = createContactDto.phone;

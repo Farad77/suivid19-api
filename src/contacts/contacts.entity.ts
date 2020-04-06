@@ -15,12 +15,12 @@ export class Contact {
   @Column({ length: 50 })
   firstName: string;
 
-  @Column({ length: 20 })
+  @Column({ length: 20, default: '' })
   phone: string;
 
   @Column({ length: 20 })
   mobile: string;
 
-  @Column()
+  @Column({ type: 'text', default: '' })
   comment: string;
 }
