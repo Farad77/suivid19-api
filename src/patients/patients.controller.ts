@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards, InternalServerErrorException } from '@nestjs/common';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { PatientsService } from './patients.service';
@@ -6,6 +6,7 @@ import { Patient } from './patients.entity';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { NewContactsDto } from './dto/new-contacts.dto';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -85,5 +86,10 @@ export class PatientsController {
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.patientsService.remove(id);
+  }
+
+  @Post(':id/add/contacts')
+  newContacts(@Param('id') id: string, @Body() newContactsDto: NewContactsDto): Promise<void> {
+    return this.patientsService.newContacts(id, newContactsDto);
   }
 }
