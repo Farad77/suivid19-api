@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, TableInheritance } from 'typeorm';
-import { Test } from '../tests/tests.entity';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'role' } })
@@ -13,7 +12,10 @@ export class User {
   @Column({ length: 50 })
   firstName: string;
   
-  @Column({ length: 255 })
+  @Column({
+    length: 255,
+    unique: true
+  })
   email: string;
 
   @Column({ length: 50 })

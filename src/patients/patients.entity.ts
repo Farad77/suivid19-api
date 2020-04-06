@@ -1,7 +1,6 @@
-import { ChildEntity, Column, OneToMany, ManyToMany, ManyToOne } from 'typeorm';
+import { ChildEntity, Column, OneToMany, ManyToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from 'src/users/users.entity';
 import { Relative } from 'src/relatives/relatives.entity';
-import { Test } from '../tests/tests.entity';
 import { Ide } from 'src/ides/ides.entity';
 import { Contact } from 'src/contacts/contacts.entity';
 import { Attachment } from 'src/attachments/attachments.entity';
@@ -42,13 +41,15 @@ export class Patient extends User {
   @ManyToMany(type => Ide, ide => ide.patients)
   ides: Promise<Ide[]>;
 
-  @OneToMany(type => Contact, contact => contact.patient)
+  @OneToMany(type => Contact, contact => contact.patient, {
+    cascade: true
+  })
   contacts: Promise<Contact[]>;
 
   @OneToMany(type => Attachment, attachment => attachment.patient)
   attachments: Promise<Attachment[]>;
 
   @ManyToOne(type => Doctor, doctor => doctor.patients)
+  @JoinColumn({ name: 'doctorId' })
   doctor: Promise<Doctor>;
-
 }
