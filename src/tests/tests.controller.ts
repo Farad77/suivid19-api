@@ -1,10 +1,11 @@
-import { Controller, Get, Body, Param, Put, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Body, Param, Put, Delete, UseGuards, Post } from '@nestjs/common';
 import { Test } from './tests.entity';
 import { TestsService } from './tests.service';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UpdateResult } from 'typeorm';
 import { UpdateTestDto }from './dto/update-test.dto'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CreateTestDto } from './dto/create-test.dto';
 
 @ApiTags('tests')
 @ApiBearerAuth()
@@ -22,6 +23,11 @@ export class TestsController {
   @Get(':id')
   get(@Param('id') id: string): Promise<Test> {
     return this.testService.findOne(id);
+  }
+
+  @Post()
+  create(@Body() test: CreateTestDto): Promise<Test> {
+    return this.testService.create(test);
   }
 
   @Put(':id')
