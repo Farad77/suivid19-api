@@ -32,6 +32,17 @@ export class PatientRepository extends Repository<Patient> {
     return await this.save(patient);
   }
 
+  async getContacts(id: string) {
+    return await this.manager
+      .createQueryBuilder()
+      .select('contact')
+      .from(Contact, 'contact')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany();
+  }
+
   async addNewContacts(id: string, newContactsDto: NewContactsDto) {
     const contactRepository = this.manager.getRepository(Contact);
     const patient = new Patient();

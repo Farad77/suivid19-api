@@ -8,6 +8,7 @@ import { NewContactsDto } from './dto/new-contacts.dto';
 import { RemoveContactsDto } from './dto/remove-contacts.dto';
 import { NewRelativesDto } from './dto/new-relatives.dto';
 import { RemoveRelativesDto } from './dto/remove-relatives.dto';
+import { Contact } from 'src/contacts/contacts.entity';
 
 @Injectable()
 export class PatientsService {
@@ -69,6 +70,10 @@ export class PatientsService {
 
   async remove(id: string): Promise<void> {
     await this.patientsRepository.delete(id);
+  }
+
+  getContacts(id: string): Promise<Contact[]> {
+    return this.patientsRepository.getContacts(id);
   }
 
   newContacts(id: string, newContactsDto: NewContactsDto): Promise<void> {

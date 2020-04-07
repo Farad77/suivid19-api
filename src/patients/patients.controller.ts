@@ -10,6 +10,7 @@ import { NewContactsDto } from './dto/new-contacts.dto';
 import { RemoveContactsDto } from './dto/remove-contacts.dto';
 import { NewRelativesDto } from './dto/new-relatives.dto';
 import { RemoveRelativesDto } from './dto/remove-relatives.dto';
+import { Contact } from 'src/contacts/contacts.entity';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -89,6 +90,11 @@ export class PatientsController {
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.patientsService.remove(id);
+  }
+  
+  @Get(':id/contacts')
+  getContacts(@Param('id') id: string): Promise<Contact[]> {
+    return this.patientsService.getContacts(id);
   }
   
   @Post(':id/add/contacts')
