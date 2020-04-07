@@ -3,18 +3,12 @@ import { Patient } from './patients.entity';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { NewContactsDto } from './dto/new-contacts.dto';
 import { Contact } from 'src/contacts/contacts.entity';
-import { ContactRepository } from 'src/contacts/contacts.repository';
 import { RemoveContactsDto } from './dto/remove-contacts.dto';
 import { NewRelativesDto } from './dto/new-relatives.dto';
-import { RelativeRepository } from 'src/relatives/relatives.repository';
 import { Relative } from 'src/relatives/relatives.entity';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
-  constructor(private contactRepository: ContactRepository, private relativeRepository: RelativeRepository) {
-    super();
-  }
-
   async createPatient(createPatientDto: CreatePatientDto) {
     const patient = new Patient();
     patient.firstName = createPatientDto.firstName;
@@ -38,6 +32,7 @@ export class PatientRepository extends Repository<Patient> {
   }
 
   async addNewContacts(id: string, newContactsDto: NewContactsDto) {
+    const contactRepository = this.manager.getRepository(Contact);
     const patient = new Patient();
     patient.id = parseInt(id);
     
@@ -50,7 +45,7 @@ export class PatientRepository extends Repository<Patient> {
       contact.mobile = newContactDto.mobile;
       contact.comment = newContactDto.comment;
 
-      await this.contactRepository.save(contact);
+      await contactRepository.save(contact);
       // TODO: manage error : return 500 if there is error
     });
   }
@@ -68,6 +63,7 @@ export class PatientRepository extends Repository<Patient> {
   }
 
   async addNewRelatives(id: string, newRelativesDto: NewRelativesDto) {
+    const relativeRepository = this.manager.getRepository(Relative);
     const patient = new Patient();
     patient.id = parseInt(id);
 
@@ -78,7 +74,7 @@ export class PatientRepository extends Repository<Patient> {
       relative.type = newRelativeDto.type;
       relative.date = newRelativeDto.date;
 
-      await this.relativeRepository.save(relative);
+      await relativeRepository.save(relative);
       // TODO: manage error : return 500 if there is error
     });
   }
