@@ -4,6 +4,7 @@ import { CreateSymptomDto } from "./dto/createSymptomDto";
 
 @EntityRepository(Symptoms)
 export class SymptomsRepository extends Repository<Symptoms> {
+  
   async createSymptom(createSymptomDto: CreateSymptomDto) {
     const symptom = new Symptoms();
     symptom.type = createSymptomDto.type;
