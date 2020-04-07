@@ -28,8 +28,8 @@ export class SymptomsService {
             await this.symptomRepository.delete(id);
           }
 
-          findByDescription_Type(description: string , type : string): Promise<Symptoms> {
+         /* findByDescription_Type(description: string , type : string): Promise<Symptoms> {
             return this.symptomRepository.findOne({description : description},{type : type});
-          }
+          }*/
 }
 
