@@ -6,6 +6,7 @@ import { Contact } from 'src/contacts/contacts.entity';
 import { RemoveContactsDto } from './dto/remove-contacts.dto';
 import { NewRelativesDto } from './dto/new-relatives.dto';
 import { Relative } from 'src/relatives/relatives.entity';
+import { RemoveRelativesDto } from './dto/remove-relatives.dto';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
@@ -36,7 +37,7 @@ export class PatientRepository extends Repository<Patient> {
     const patient = new Patient();
     patient.id = parseInt(id);
     
-    newContactsDto.newContacts.forEach(async newContactDto => {
+    newContactsDto.contacts.forEach(async newContactDto => {
       const contact = new Contact();
       contact.patient = Promise.resolve(patient);
       contact.firstName = newContactDto.firstName;
@@ -77,5 +78,17 @@ export class PatientRepository extends Repository<Patient> {
       await relativeRepository.save(relative);
       // TODO: manage error : return 500 if there is error
     });
+  }
+
+  async removeRelatives(id: string, removeRelativesDto: RemoveRelativesDto) {
+    await this.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Relative)
+      .where('"id" IN (:...ids) AND "patientId" = :patient', {
+        ids: removeRelativesDto.relatives.map(removeRelativeDto => removeRelativeDto.id),
+        patient: id,
+      })
+      .execute();
   }
 }

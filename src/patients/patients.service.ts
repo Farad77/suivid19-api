@@ -7,6 +7,7 @@ import { UpdateResult } from 'typeorm';
 import { NewContactsDto } from './dto/new-contacts.dto';
 import { RemoveContactsDto } from './dto/remove-contacts.dto';
 import { NewRelativesDto } from './dto/new-relatives.dto';
+import { RemoveRelativesDto } from './dto/remove-relatives.dto';
 
 @Injectable()
 export class PatientsService {
@@ -80,5 +81,9 @@ export class PatientsService {
 
   addNewRelatives(id: string, newRelativesDto: NewRelativesDto): Promise<void> {
     return this.patientsRepository.addNewRelatives(id, newRelativesDto);
+  }
+
+  removeRelatives(id: string, removeRelativesDto: RemoveRelativesDto): Promise<void> {
+    return this.patientsRepository.removeRelatives(id, removeRelativesDto);
   }
 }

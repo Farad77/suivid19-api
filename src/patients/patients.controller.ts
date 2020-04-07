@@ -9,6 +9,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { NewContactsDto } from './dto/new-contacts.dto';
 import { RemoveContactsDto } from './dto/remove-contacts.dto';
 import { NewRelativesDto } from './dto/new-relatives.dto';
+import { RemoveRelativesDto } from './dto/remove-relatives.dto';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -103,5 +104,10 @@ export class PatientsController {
   @Post(':id/add/relatives')
   newRelatives(@Param('id') id: string, @Body() newRelativesDto: NewRelativesDto): Promise<void> {
     return this.patientsService.addNewRelatives(id, newRelativesDto);
+  }
+
+  @Delete(':id/del/relatives')
+  removeRelatives(@Param('id') id: string, @Body() removeRelativesDto: RemoveRelativesDto): Promise<void> {
+    return this.patientsService.removeRelatives(id, removeRelativesDto);
   }
 }

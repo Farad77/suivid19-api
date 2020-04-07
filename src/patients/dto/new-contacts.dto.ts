@@ -6,5 +6,5 @@ export class NewContactsDto {
     type: NewContactDto,
     isArray: true
   })
-  newContacts: NewContactDto[];
+  contacts: NewContactDto[];
 }
