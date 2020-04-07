@@ -74,6 +74,18 @@ export class PatientRepository extends Repository<Patient> {
       .execute();
   }
 
+  async getRelatives(id: string) {
+    return await this.manager
+      .createQueryBuilder()
+      .select('relative')
+      .from(Relative, 'relative')
+      .leftJoinAndSelect('relative.relative', 'patient')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany();
+  }
+
   async addNewRelatives(id: string, newRelativesDto: NewRelativesDto) {
     const relativeRepository = this.manager.getRepository(Relative);
     const patient = new Patient();

@@ -9,6 +9,7 @@ import { RemoveContactsDto } from './dto/remove-contacts.dto';
 import { NewRelativesDto } from './dto/new-relatives.dto';
 import { RemoveRelativesDto } from './dto/remove-relatives.dto';
 import { Contact } from 'src/contacts/contacts.entity';
+import { Relative } from 'src/relatives/relatives.entity';
 
 @Injectable()
 export class PatientsService {
@@ -75,7 +76,7 @@ export class PatientsService {
   getContacts(id: string): Promise<Contact[]> {
     return this.patientsRepository.getContacts(id);
   }
-
+  
   newContacts(id: string, newContactsDto: NewContactsDto): Promise<void> {
     return this.patientsRepository.addNewContacts(id, newContactsDto);
   }
@@ -84,6 +85,10 @@ export class PatientsService {
     return this.patientsRepository.removeContacts(id, removeContactsDto);
   }
 
+  getRelatives(id: string): Promise<Relative[]> {
+    return this.patientsRepository.getRelatives(id);
+  }
+  
   addNewRelatives(id: string, newRelativesDto: NewRelativesDto): Promise<void> {
     return this.patientsRepository.addNewRelatives(id, newRelativesDto);
   }
