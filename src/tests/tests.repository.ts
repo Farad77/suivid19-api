@@ -7,7 +7,6 @@ import { SymptomsRepository } from '../symptoms/symptoms.repository';
 
 @EntityRepository(Test)
 export class TestsRepository extends Repository<Test> {
-
   constructor(private symptomRepository : SymptomsRepository){
     super();
   }
@@ -36,7 +35,7 @@ export class TestsRepository extends Repository<Test> {
     test.id = parseInt(id);
       
       const symptom  = new Symptoms();
-    
+      this.symptomRepository.findOne
       symptom.description = newSymptom.description;
       symptom.type = newSymptom.type;
 
@@ -44,7 +43,7 @@ export class TestsRepository extends Repository<Test> {
 
       await this.symptomRepository.save(symptom);
       // TODO: manage error : return 500 if there is error
-    });
+    }
+    
   }
 
-}
