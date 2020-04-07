@@ -14,6 +14,9 @@ import { Contact } from 'src/contacts/contacts.entity';
 import { Relative } from 'src/relatives/relatives.entity';
 import { Roles } from 'src/roles.decorator';
 import { RolesGuard } from 'src/roles.guard';
+import { Ide } from 'src/ides/ides.entity';
+import { LinkIdesDto } from './dto/link-ides.dto';
+import { UnlinkIdesDto } from './dto/unlink-ides.dto';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -145,5 +148,26 @@ export class PatientsController {
   @UseGuards(RolesGuard)
   removeRelatives(@Param('id') id: string, @Body() removeRelativesDto: RemoveRelativesDto): Promise<void> {
     return this.patientsService.removeRelatives(id, removeRelativesDto);
+  }
+
+  @Get(':id/ides')
+  @Roles('Admin', 'Labo', 'Patient', 'Doctor', 'Ide', 'Monitor')
+  @UseGuards(RolesGuard)
+  getIdes(@Param('id') id: string): Promise<Ide[]> {
+    return this.patientsService.getIdes(id);
+  }
+
+  @Post(':id/link/ides')
+  @Roles('Admin', 'Patient', 'Doctor', 'Ide')
+  @UseGuards(RolesGuard)
+  linkWithIdes(@Param('id') id: string, @Body() linkIdesDto: LinkIdesDto): Promise<void> {
+    return this.patientsService.linkWithIdes(id, linkIdesDto);
+  }
+
+  @Delete(':id/unlink/ides')
+  @Roles('Admin', 'Patient', 'Doctor', 'Ide')
+  @UseGuards(RolesGuard)
+  unlinkWithIdes(@Param('id') id: string, @Body() unlinkIdesDto: UnlinkIdesDto): Promise<void> {
+    return this.patientsService.unlinkWithIdes(id, unlinkIdesDto);
   }
 }

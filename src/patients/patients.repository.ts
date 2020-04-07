@@ -7,6 +7,9 @@ import { RemoveContactsDto } from './dto/remove-contacts.dto';
 import { NewRelativesDto } from './dto/new-relatives.dto';
 import { Relative } from 'src/relatives/relatives.entity';
 import { RemoveRelativesDto } from './dto/remove-relatives.dto';
+import { Ide } from 'src/ides/ides.entity';
+import { LinkIdesDto } from './dto/link-ides.dto';
+import { UnlinkIdesDto } from './dto/unlink-ides.dto';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
@@ -113,5 +116,37 @@ export class PatientRepository extends Repository<Patient> {
         patient: id,
       })
       .execute();
+  }
+
+  async getIdes(id: string) {
+    return await this.manager
+      .createQueryBuilder()
+      .select('ide')
+      .from(Ide, 'ide')
+      .leftJoin('ide.patients', 'patient')
+      .where('patient."id" = :patient', {
+        patient: id
+      })
+      .getMany();
+  }
+
+  async linkWithIdes(id: string, linkIdesDto: LinkIdesDto) {
+    linkIdesDto.ides.forEach(async linkIdeDto => {
+      await this.createQueryBuilder()
+        .relation(Patient, 'ides')
+        .of(id)
+        .add(linkIdeDto.id);
+      // TODO: manage error : return 500 if there is error
+    });
+  }
+
+  async unlinkWithIdes(id: string, unlinkIdesDto: UnlinkIdesDto) {
+    unlinkIdesDto.ides.forEach(async unlinkIdeDto => {
+      await this.createQueryBuilder()
+        .relation(Patient, 'ides')
+        .of(id)
+        .remove(unlinkIdeDto.id);
+      // TODO: manage error : return 500 if there is error
+    });
   }
 }

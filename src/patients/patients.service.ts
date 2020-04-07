@@ -10,6 +10,9 @@ import { NewRelativesDto } from './dto/new-relatives.dto';
 import { RemoveRelativesDto } from './dto/remove-relatives.dto';
 import { Contact } from 'src/contacts/contacts.entity';
 import { Relative } from 'src/relatives/relatives.entity';
+import { LinkIdesDto } from './dto/link-ides.dto';
+import { UnlinkIdesDto } from './dto/unlink-ides.dto';
+import { Ide } from 'src/ides/ides.entity';
 
 @Injectable()
 export class PatientsService {
@@ -95,5 +98,17 @@ export class PatientsService {
 
   removeRelatives(id: string, removeRelativesDto: RemoveRelativesDto): Promise<void> {
     return this.patientsRepository.removeRelatives(id, removeRelativesDto);
+  }
+
+  getIdes(id: string): Promise<Ide[]> {
+    return this.patientsRepository.getIdes(id);
+  }
+
+  linkWithIdes(id: string, linkIdesDto: LinkIdesDto) {
+    return this.patientsRepository.linkWithIdes(id, linkIdesDto);
+  }
+
+  unlinkWithIdes(id: string, unlinkIdesDto: UnlinkIdesDto) {
+    return this.patientsRepository.unlinkWithIdes(id, unlinkIdesDto);
   }
 }
