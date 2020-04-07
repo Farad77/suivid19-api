@@ -4,6 +4,7 @@ import { Test } from './tests.entity';
 import { CreateTestDto } from './dto/create-test.dto';
 import { UpdateTestDto } from './dto/update-test.dto';
 import { UpdateResult } from 'typeorm';
+import { NewSymptomDto } from './dto/new-symptoms.dto';
 
 @Injectable()
 export class TestsService {
@@ -28,5 +29,9 @@ export class TestsService {
     
       async remove(id: string): Promise<void> {
         await this.testRepository.delete(id);
+      }
+
+      newSymptom(id: string, newSymptomDto: NewSymptomDto): Promise<void> {
+        return this.testRepository.addNewSymptoms(id, newSymptomDto);
       }
 }
