@@ -5,10 +5,13 @@ import { NewContactsDto } from './dto/new-contacts.dto';
 import { Contact } from 'src/contacts/contacts.entity';
 import { ContactRepository } from 'src/contacts/contacts.repository';
 import { RemoveContactsDto } from './dto/remove-contacts.dto';
+import { NewRelativesDto } from './dto/new-relatives.dto';
+import { RelativeRepository } from 'src/relatives/relatives.repository';
+import { Relative } from 'src/relatives/relatives.entity';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
-  constructor(private contactRepository: ContactRepository) {
+  constructor(private contactRepository: ContactRepository, private relativeRepository: RelativeRepository) {
     super();
   }
 
@@ -62,5 +65,21 @@ export class PatientRepository extends Repository<Patient> {
         patient: id,
       })
       .execute();
+  }
+
+  async addNewRelatives(id: string, newRelativesDto: NewRelativesDto) {
+    const patient = new Patient();
+    patient.id = parseInt(id);
+
+    newRelativesDto.relatives.forEach(async newRelativeDto => {
+      const relative = new Relative();
+      relative.patient = Promise.resolve(patient);
+      relative.relative = Promise.resolve(newRelativeDto.relative);
+      relative.type = newRelativeDto.type;
+      relative.date = newRelativeDto.date;
+
+      await this.relativeRepository.save(relative);
+      // TODO: manage error : return 500 if there is error
+    });
   }
 }
