@@ -4,6 +4,12 @@ import { PatientRepository } from './patients.repository';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { UpdateResult } from 'typeorm';
+import { NewContactsDto } from './dto/new-contacts.dto';
+import { RemoveContactsDto } from './dto/remove-contacts.dto';
+import { NewRelativesDto } from './dto/new-relatives.dto';
+import { RemoveRelativesDto } from './dto/remove-relatives.dto';
+import { Contact } from 'src/contacts/contacts.entity';
+import { Relative } from 'src/relatives/relatives.entity';
 
 @Injectable()
 export class PatientsService {
@@ -65,5 +71,29 @@ export class PatientsService {
 
   async remove(id: string): Promise<void> {
     await this.patientsRepository.delete(id);
+  }
+
+  getContacts(id: string): Promise<Contact[]> {
+    return this.patientsRepository.getContacts(id);
+  }
+  
+  newContacts(id: string, newContactsDto: NewContactsDto): Promise<void> {
+    return this.patientsRepository.addNewContacts(id, newContactsDto);
+  }
+  
+  removeContacts(id: string, removeContactsDto: RemoveContactsDto): Promise<void> {
+    return this.patientsRepository.removeContacts(id, removeContactsDto);
+  }
+
+  getRelatives(id: string): Promise<Relative[]> {
+    return this.patientsRepository.getRelatives(id);
+  }
+  
+  addNewRelatives(id: string, newRelativesDto: NewRelativesDto): Promise<void> {
+    return this.patientsRepository.addNewRelatives(id, newRelativesDto);
+  }
+
+  removeRelatives(id: string, removeRelativesDto: RemoveRelativesDto): Promise<void> {
+    return this.patientsRepository.removeRelatives(id, removeRelativesDto);
   }
 }

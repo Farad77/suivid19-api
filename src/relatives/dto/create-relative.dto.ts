@@ -4,10 +4,10 @@ import { RelativeType } from '../relatives.entity';
 
 export class CreateRelativeDto {
   @ApiProperty()
-  patient: Patient;
+  patient: Promise<Patient>;
 
   @ApiProperty()
-  relative: Patient;
+  relative: Promise<Patient>;
 
   @ApiProperty()
   type: RelativeType;

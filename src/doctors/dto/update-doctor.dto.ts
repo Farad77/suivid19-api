@@ -3,7 +3,9 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Patient } from 'src/patients/patients.entity';
 
 export class UpdateDoctorDto extends UpdateUserDto {
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    isArray: true
+  })
   patients: Promise<Patient[]>;
 
   @ApiPropertyOptional()

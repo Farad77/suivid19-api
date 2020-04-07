@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Body, Put, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Body, Put, Delete, UseGuards, Post } from '@nestjs/common';
 import { SymptomsService } from './symptoms.service';
 import { Symptoms } from './symptoms.entity';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -34,4 +34,5 @@ export class SymptomsController {
   remove(@Param('id') id: string): Promise<void> {
     return this.symptomsService.remove(id);
   }
+
 }

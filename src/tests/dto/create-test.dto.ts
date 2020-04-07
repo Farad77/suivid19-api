@@ -16,7 +16,7 @@ export class CreateTestDto {
   @ApiProperty()
   hasSymptoms: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ enum: ['Maux de tete', 'Mal à la gorge', 'Difficulté respiratoire']})
   symptoms: Symptoms[];
   
   @ApiProperty()

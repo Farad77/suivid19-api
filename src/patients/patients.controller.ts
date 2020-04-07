@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards, InternalServerErrorException } from '@nestjs/common';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { PatientsService } from './patients.service';
@@ -6,6 +6,12 @@ import { Patient } from './patients.entity';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { NewContactsDto } from './dto/new-contacts.dto';
+import { RemoveContactsDto } from './dto/remove-contacts.dto';
+import { NewRelativesDto } from './dto/new-relatives.dto';
+import { RemoveRelativesDto } from './dto/remove-relatives.dto';
+import { Contact } from 'src/contacts/contacts.entity';
+import { Relative } from 'src/relatives/relatives.entity';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -85,5 +91,35 @@ export class PatientsController {
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.patientsService.remove(id);
+  }
+  
+  @Get(':id/contacts')
+  getContacts(@Param('id') id: string): Promise<Contact[]> {
+    return this.patientsService.getContacts(id);
+  }
+  
+  @Post(':id/add/contacts')
+  newContacts(@Param('id') id: string, @Body() newContactsDto: NewContactsDto): Promise<void> {
+    return this.patientsService.newContacts(id, newContactsDto);
+  }
+  
+  @Delete(':id/del/contacts')
+  removeContacts(@Param('id') id: string, @Body() removeContactsDto: RemoveContactsDto): Promise<void> {
+    return this.patientsService.removeContacts(id, removeContactsDto);
+  }
+
+  @Get(':id/relatives')
+  getRelatives(@Param('id') id: string): Promise<Relative[]> {
+    return this.patientsService.getRelatives(id);
+  }
+
+  @Post(':id/add/relatives')
+  newRelatives(@Param('id') id: string, @Body() newRelativesDto: NewRelativesDto): Promise<void> {
+    return this.patientsService.addNewRelatives(id, newRelativesDto);
+  }
+
+  @Delete(':id/del/relatives')
+  removeRelatives(@Param('id') id: string, @Body() removeRelativesDto: RemoveRelativesDto): Promise<void> {
+    return this.patientsService.removeRelatives(id, removeRelativesDto);
   }
 }

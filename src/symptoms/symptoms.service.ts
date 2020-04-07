@@ -27,5 +27,9 @@ export class SymptomsService {
           async remove(id: string): Promise<void> {
             await this.symptomRepository.delete(id);
           }
+
+         /* findByDescription_Type(description: string , type : string): Promise<Symptoms> {
+            return this.symptomRepository.findOne({description : description},{type : type});
+          }*/
 }
 
