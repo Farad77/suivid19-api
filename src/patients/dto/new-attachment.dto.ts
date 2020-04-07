@@ -1,8 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class CreateAttachmentDto {
+export class NewAttachmentDto {
   @ApiProperty()
   title: string;
+
+  @ApiProperty()
+  firstName: string;
 
   @ApiPropertyOptional()
   description: string;

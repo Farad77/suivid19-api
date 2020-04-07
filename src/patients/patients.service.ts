@@ -13,6 +13,9 @@ import { Relative } from 'src/relatives/relatives.entity';
 import { LinkIdesDto } from './dto/link-ides.dto';
 import { UnlinkIdesDto } from './dto/unlink-ides.dto';
 import { Ide } from 'src/ides/ides.entity';
+import { Attachment } from 'src/attachments/attachments.entity';
+import { NewAttachmentsDto } from './dto/new-attachments.dto';
+import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
 
 @Injectable()
 export class PatientsService {
@@ -110,5 +113,17 @@ export class PatientsService {
 
   unlinkWithIdes(id: string, unlinkIdesDto: UnlinkIdesDto) {
     return this.patientsRepository.unlinkWithIdes(id, unlinkIdesDto);
+  }
+
+  getAttachments(id: string): Promise<Attachment[]> {
+    return this.patientsRepository.getAttachments(id);
+  }
+
+  newAttachments(id: string, newAttachmentsDto: NewAttachmentsDto): Promise<void> {
+    return this.patientsRepository.addNewAttachments(id, newAttachmentsDto);
+  }
+
+  removeAttachments(id: string, removeAttachmentsDto: RemoveAttachmentsDto): Promise<void> {
+    return this.patientsRepository.removeAttachments(id, removeAttachmentsDto);
   }
 }

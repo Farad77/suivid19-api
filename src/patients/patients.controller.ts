@@ -17,6 +17,9 @@ import { RolesGuard } from 'src/roles.guard';
 import { Ide } from 'src/ides/ides.entity';
 import { LinkIdesDto } from './dto/link-ides.dto';
 import { UnlinkIdesDto } from './dto/unlink-ides.dto';
+import { Attachment } from 'src/attachments/attachments.entity';
+import { NewAttachmentsDto } from './dto/new-attachments.dto';
+import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -169,5 +172,26 @@ export class PatientsController {
   @UseGuards(RolesGuard)
   unlinkWithIdes(@Param('id') id: string, @Body() unlinkIdesDto: UnlinkIdesDto): Promise<void> {
     return this.patientsService.unlinkWithIdes(id, unlinkIdesDto);
+  }
+
+  @Get(':id/attachments')
+  @Roles('Admin', 'Labo', 'Patient', 'Doctor', 'Ide', 'Monitor')
+  @UseGuards(RolesGuard)
+  getAttachments(@Param('id') id: string): Promise<Attachment[]> {
+    return this.patientsService.getAttachments(id);
+  }
+
+  @Post(':id/add/attachments')
+  @Roles('Admin', 'Patient', 'Doctor', 'Ide')
+  @UseGuards(RolesGuard)
+  newAttachments(@Param('id') id: string, @Body() newAttachmentsDto: NewAttachmentsDto): Promise<void> {
+    return this.patientsService.newAttachments(id, newAttachmentsDto);
+  }
+
+  @Delete(':id/del/attachments')
+  @Roles('Admin', 'Patient', 'Doctor', 'Ide')
+  @UseGuards(RolesGuard)
+  removeAttachments(@Param('id') id: string, @Body() removeAttachmentsDto: RemoveAttachmentsDto): Promise<void> {
+    return this.patientsService.removeAttachments(id, removeAttachmentsDto);
   }
 }

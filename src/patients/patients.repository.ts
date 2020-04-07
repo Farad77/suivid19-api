@@ -10,6 +10,9 @@ import { RemoveRelativesDto } from './dto/remove-relatives.dto';
 import { Ide } from 'src/ides/ides.entity';
 import { LinkIdesDto } from './dto/link-ides.dto';
 import { UnlinkIdesDto } from './dto/unlink-ides.dto';
+import { Attachment } from 'src/attachments/attachments.entity';
+import { NewAttachmentsDto } from './dto/new-attachments.dto';
+import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
@@ -148,5 +151,46 @@ export class PatientRepository extends Repository<Patient> {
         .remove(unlinkIdeDto.id);
       // TODO: manage error : return 500 if there is error
     });
+  }
+
+  async getAttachments(id: string) {
+    return await this.manager
+      .createQueryBuilder()
+      .select('attachment')
+      .from(Attachment, 'attachment')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany();
+  }
+
+  async addNewAttachments(id: string, newAttachmentsDto: NewAttachmentsDto) {
+    const attachmentRepository = this.manager.getRepository(Attachment);
+    const patient = new Patient();
+    patient.id = parseInt(id);
+
+    newAttachmentsDto.attachments.forEach(async newAttachmentDto => {
+      const attachment = new Attachment();
+      attachment.patient = Promise.resolve(patient);
+      attachment.title = newAttachmentDto.title;
+      attachment.description = newAttachmentDto.description;
+      attachment.date = newAttachmentDto.date;
+      attachment.link = newAttachmentDto.link;
+
+      await attachmentRepository.save(attachment);
+      // TODO: manage error : return 500 if there is error
+    });
+  }
+
+  async removeAttachments(id: string, removeAttachmentsDto: RemoveAttachmentsDto) {
+    await this.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Attachment)
+      .where('"id" IN (:...ids) AND "patientId" = :patient', {
+        ids: removeAttachmentsDto.attachments.map(removeAttachmentDto => removeAttachmentDto.id),
+        patient: id,
+      })
+      .execute();
   }
 }
