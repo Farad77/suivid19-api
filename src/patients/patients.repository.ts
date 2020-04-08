@@ -13,6 +13,7 @@ import { UnlinkIdesDto } from './dto/unlink-ides.dto';
 import { Attachment } from 'src/attachments/attachments.entity';
 import { NewAttachmentsDto } from './dto/new-attachments.dto';
 import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
+import { Doctor } from 'src/doctors/doctors.entity';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
@@ -192,5 +193,19 @@ export class PatientRepository extends Repository<Patient> {
         patient: id,
       })
       .execute();
+  }
+
+  async getDoctor(id: string) {
+    const { doctor } = await this.findOne(id, { relations: ['doctor'] });
+    return doctor;
+  }
+
+  async setDoctor(id: string, doctorId: string) {
+    const user = await this.findOne(id, { relations: ['doctor'] });
+    const doctor = new Doctor();
+    doctor.id = parseInt(doctorId);
+    user.doctor = Promise.resolve(doctor);
+
+    await this.save(user);
   }
 }

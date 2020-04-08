@@ -16,6 +16,7 @@ import { Ide } from 'src/ides/ides.entity';
 import { Attachment } from 'src/attachments/attachments.entity';
 import { NewAttachmentsDto } from './dto/new-attachments.dto';
 import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
+import { Doctor } from 'src/doctors/doctors.entity';
 
 @Injectable()
 export class PatientsService {
@@ -125,5 +126,17 @@ export class PatientsService {
 
   removeAttachments(id: string, removeAttachmentsDto: RemoveAttachmentsDto): Promise<void> {
     return this.patientsRepository.removeAttachments(id, removeAttachmentsDto);
+  }
+
+  getDoctor(id: string): Promise<Doctor> {
+    return this.patientsRepository.getDoctor(id);
+  }
+
+  setDoctor(id: string, doctorId: string): Promise<void> {
+    return this.patientsRepository.setDoctor(id, doctorId);
+  }
+
+  unsetDoctor(id: string): Promise<UpdateResult> {
+    return this.patientsRepository.update(id, { doctor: null });
   }
 }

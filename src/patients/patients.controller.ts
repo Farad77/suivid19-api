@@ -20,6 +20,7 @@ import { UnlinkIdesDto } from './dto/unlink-ides.dto';
 import { Attachment } from 'src/attachments/attachments.entity';
 import { NewAttachmentsDto } from './dto/new-attachments.dto';
 import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
+import { Doctor } from 'src/doctors/doctors.entity';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -193,5 +194,26 @@ export class PatientsController {
   @UseGuards(RolesGuard)
   removeAttachments(@Param('id') id: string, @Body() removeAttachmentsDto: RemoveAttachmentsDto): Promise<void> {
     return this.patientsService.removeAttachments(id, removeAttachmentsDto);
+  }
+
+  @Get(':id/doctor')
+  @Roles('Admin', 'Labo', 'Patient', 'Doctor', 'Ide', 'Monitor')
+  @UseGuards(RolesGuard)
+  getDoctor(@Param('id') id: string): Promise<Doctor> {
+    return this.patientsService.getDoctor(id);
+  }
+
+  @Put(':id/set/doctor/:doctorId')
+  @Roles('Admin', 'Patient', 'Doctor', 'Ide')
+  @UseGuards(RolesGuard)
+  newDoctor(@Param('id') id: string, @Param('doctorId') doctorId: string): Promise<void> {
+    return this.patientsService.setDoctor(id, doctorId);
+  }
+
+  @Delete(':id/unset/doctor')
+  @Roles('Admin', 'Patient', 'Doctor', 'Ide')
+  @UseGuards(RolesGuard)
+  removeDoctor(@Param('id') id: string): Promise<UpdateResult> {
+    return this.patientsService.unsetDoctor(id);
   }
 }
