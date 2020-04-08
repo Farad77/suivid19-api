@@ -7,6 +7,15 @@ import { UpdateResult } from 'typeorm';
 import { NewContactsDto } from './dto/new-contacts.dto';
 import { RemoveContactsDto } from './dto/remove-contacts.dto';
 import { NewRelativesDto } from './dto/new-relatives.dto';
+import { RemoveRelativesDto } from './dto/remove-relatives.dto';
+import { Contact } from 'src/contacts/contacts.entity';
+import { Relative } from 'src/relatives/relatives.entity';
+import { LinkIdesDto } from './dto/link-ides.dto';
+import { UnlinkIdesDto } from './dto/unlink-ides.dto';
+import { Ide } from 'src/ides/ides.entity';
+import { Attachment } from 'src/attachments/attachments.entity';
+import { NewAttachmentsDto } from './dto/new-attachments.dto';
+import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
 
 @Injectable()
 export class PatientsService {
@@ -70,6 +79,10 @@ export class PatientsService {
     await this.patientsRepository.delete(id);
   }
 
+  getContacts(id: string): Promise<Contact[]> {
+    return this.patientsRepository.getContacts(id);
+  }
+  
   newContacts(id: string, newContactsDto: NewContactsDto): Promise<void> {
     return this.patientsRepository.addNewContacts(id, newContactsDto);
   }
@@ -78,7 +91,39 @@ export class PatientsService {
     return this.patientsRepository.removeContacts(id, removeContactsDto);
   }
 
+  getRelatives(id: string): Promise<Relative[]> {
+    return this.patientsRepository.getRelatives(id);
+  }
+  
   addNewRelatives(id: string, newRelativesDto: NewRelativesDto): Promise<void> {
     return this.patientsRepository.addNewRelatives(id, newRelativesDto);
+  }
+
+  removeRelatives(id: string, removeRelativesDto: RemoveRelativesDto): Promise<void> {
+    return this.patientsRepository.removeRelatives(id, removeRelativesDto);
+  }
+
+  getIdes(id: string): Promise<Ide[]> {
+    return this.patientsRepository.getIdes(id);
+  }
+
+  linkWithIdes(id: string, linkIdesDto: LinkIdesDto) {
+    return this.patientsRepository.linkWithIdes(id, linkIdesDto);
+  }
+
+  unlinkWithIdes(id: string, unlinkIdesDto: UnlinkIdesDto) {
+    return this.patientsRepository.unlinkWithIdes(id, unlinkIdesDto);
+  }
+
+  getAttachments(id: string): Promise<Attachment[]> {
+    return this.patientsRepository.getAttachments(id);
+  }
+
+  newAttachments(id: string, newAttachmentsDto: NewAttachmentsDto): Promise<void> {
+    return this.patientsRepository.addNewAttachments(id, newAttachmentsDto);
+  }
+
+  removeAttachments(id: string, removeAttachmentsDto: RemoveAttachmentsDto): Promise<void> {
+    return this.patientsRepository.removeAttachments(id, removeAttachmentsDto);
   }
 }

@@ -1,7 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Gender } from '../patients.entity';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
-import { Ide } from 'src/ides/ides.entity';
 import { Attachment } from 'src/attachments/attachments.entity';
 import { Doctor } from 'src/doctors/doctors.entity';
 
@@ -23,9 +22,6 @@ export class UpdatePatientDto extends UpdateUserDto {
 
   @ApiPropertyOptional()
   isHospitalized: boolean;
-
-  @ApiPropertyOptional()
-  ides: Promise<Ide[]>;
 
   @ApiPropertyOptional()
   attachments: Promise<Attachment[]>;

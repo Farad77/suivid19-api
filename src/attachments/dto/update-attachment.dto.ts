@@ -9,9 +9,6 @@ export class UpdateAttachmentDto {
   title: string;
 
   @ApiPropertyOptional()
-  firstName: string;
-
-  @ApiPropertyOptional()
   description: string;
 
   @ApiPropertyOptional()

@@ -3,18 +3,19 @@ import { Patient } from './patients.entity';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { NewContactsDto } from './dto/new-contacts.dto';
 import { Contact } from 'src/contacts/contacts.entity';
-import { ContactRepository } from 'src/contacts/contacts.repository';
 import { RemoveContactsDto } from './dto/remove-contacts.dto';
 import { NewRelativesDto } from './dto/new-relatives.dto';
-import { RelativeRepository } from 'src/relatives/relatives.repository';
 import { Relative } from 'src/relatives/relatives.entity';
+import { RemoveRelativesDto } from './dto/remove-relatives.dto';
+import { Ide } from 'src/ides/ides.entity';
+import { LinkIdesDto } from './dto/link-ides.dto';
+import { UnlinkIdesDto } from './dto/unlink-ides.dto';
+import { Attachment } from 'src/attachments/attachments.entity';
+import { NewAttachmentsDto } from './dto/new-attachments.dto';
+import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
-  constructor(private contactRepository: ContactRepository, private relativeRepository: RelativeRepository) {
-    super();
-  }
-
   async createPatient(createPatientDto: CreatePatientDto) {
     const patient = new Patient();
     patient.firstName = createPatientDto.firstName;
@@ -37,11 +38,23 @@ export class PatientRepository extends Repository<Patient> {
     return await this.save(patient);
   }
 
+  async getContacts(id: string) {
+    return await this.manager
+      .createQueryBuilder()
+      .select('contact')
+      .from(Contact, 'contact')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany();
+  }
+
   async addNewContacts(id: string, newContactsDto: NewContactsDto) {
+    const contactRepository = this.manager.getRepository(Contact);
     const patient = new Patient();
     patient.id = parseInt(id);
     
-    newContactsDto.newContacts.forEach(async newContactDto => {
+    newContactsDto.contacts.forEach(async newContactDto => {
       const contact = new Contact();
       contact.patient = Promise.resolve(patient);
       contact.firstName = newContactDto.firstName;
@@ -50,7 +63,7 @@ export class PatientRepository extends Repository<Patient> {
       contact.mobile = newContactDto.mobile;
       contact.comment = newContactDto.comment;
 
-      await this.contactRepository.save(contact);
+      await contactRepository.save(contact);
       // TODO: manage error : return 500 if there is error
     });
   }
@@ -67,7 +80,20 @@ export class PatientRepository extends Repository<Patient> {
       .execute();
   }
 
+  async getRelatives(id: string) {
+    return await this.manager
+      .createQueryBuilder()
+      .select('relative')
+      .from(Relative, 'relative')
+      .leftJoinAndSelect('relative.relative', 'patient')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany();
+  }
+
   async addNewRelatives(id: string, newRelativesDto: NewRelativesDto) {
+    const relativeRepository = this.manager.getRepository(Relative);
     const patient = new Patient();
     patient.id = parseInt(id);
 
@@ -78,8 +104,93 @@ export class PatientRepository extends Repository<Patient> {
       relative.type = newRelativeDto.type;
       relative.date = newRelativeDto.date;
 
-      await this.relativeRepository.save(relative);
+      await relativeRepository.save(relative);
       // TODO: manage error : return 500 if there is error
     });
+  }
+
+  async removeRelatives(id: string, removeRelativesDto: RemoveRelativesDto) {
+    await this.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Relative)
+      .where('"id" IN (:...ids) AND "patientId" = :patient', {
+        ids: removeRelativesDto.relatives.map(removeRelativeDto => removeRelativeDto.id),
+        patient: id,
+      })
+      .execute();
+  }
+
+  async getIdes(id: string) {
+    return await this.manager
+      .createQueryBuilder()
+      .select('ide')
+      .from(Ide, 'ide')
+      .leftJoin('ide.patients', 'patient')
+      .where('patient."id" = :patient', {
+        patient: id
+      })
+      .getMany();
+  }
+
+  async linkWithIdes(id: string, linkIdesDto: LinkIdesDto) {
+    linkIdesDto.ides.forEach(async linkIdeDto => {
+      await this.createQueryBuilder()
+        .relation(Patient, 'ides')
+        .of(id)
+        .add(linkIdeDto.id);
+      // TODO: manage error : return 500 if there is error
+    });
+  }
+
+  async unlinkWithIdes(id: string, unlinkIdesDto: UnlinkIdesDto) {
+    unlinkIdesDto.ides.forEach(async unlinkIdeDto => {
+      await this.createQueryBuilder()
+        .relation(Patient, 'ides')
+        .of(id)
+        .remove(unlinkIdeDto.id);
+      // TODO: manage error : return 500 if there is error
+    });
+  }
+
+  async getAttachments(id: string) {
+    return await this.manager
+      .createQueryBuilder()
+      .select('attachment')
+      .from(Attachment, 'attachment')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany();
+  }
+
+  async addNewAttachments(id: string, newAttachmentsDto: NewAttachmentsDto) {
+    const attachmentRepository = this.manager.getRepository(Attachment);
+    const patient = new Patient();
+    patient.id = parseInt(id);
+
+    newAttachmentsDto.attachments.forEach(async newAttachmentDto => {
+      const attachment = new Attachment();
+      attachment.patient = Promise.resolve(patient);
+      attachment.title = newAttachmentDto.title;
+      attachment.description = newAttachmentDto.description;
+      attachment.date = newAttachmentDto.date;
+      attachment.link = newAttachmentDto.link;
+
+      await attachmentRepository.save(attachment);
+      // TODO: manage error : return 500 if there is error
+    });
+  }
+
+  async removeAttachments(id: string, removeAttachmentsDto: RemoveAttachmentsDto) {
+    await this.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Attachment)
+      .where('"id" IN (:...ids) AND "patientId" = :patient', {
+        ids: removeAttachmentsDto.attachments.map(removeAttachmentDto => removeAttachmentDto.id),
+        patient: id,
+      })
+      .execute();
   }
 }
