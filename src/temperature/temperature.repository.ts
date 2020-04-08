@@ -28,12 +28,12 @@ export class TemperatureRepository extends Repository<Temperature>{
           doctor: id
         }).getOne());
 
-        this.liste = this.manager
+        /*this.liste = this.manager
           .createQueryBuilder()
           .select('temperature')
           .from(Temperature, 'temperature')
           .where("temperature.patient IN (:...patients)", { patients: (await this.docteur).patients })
-          .getMany();
+          .getMany();*/
         /*if(currentUser.role == "Doctor"){
   
          this.docteur = Promise.resolve(this.manager.createQueryBuilder()
