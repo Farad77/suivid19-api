@@ -23,6 +23,7 @@ import { SurveyModule } from './survey/survey.module';
 import { SurveycategorieModule } from './surveycategorie/surveycategorie.module';
 import { SurveychoicesModule } from './surveychoices/surveychoices.module';
 import { NotificationModelModule } from './notification-model/notification-model.module';
+import { TemperatureModule } from './temperature/temperature.module';
 
 @Module({
   imports: [
@@ -47,7 +48,8 @@ import { NotificationModelModule } from './notification-model/notification-model
     SurveyModule,
     SurveycategorieModule,
     SurveychoicesModule,
-    NotificationModelModule
+    NotificationModelModule,
+    TemperatureModule
   ],
   controllers: [AppController],
   providers: [AppService],
