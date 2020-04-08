@@ -1,10 +1,11 @@
-import { Controller, Get, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Body, Param, UseGuards, Post } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Survey } from './survey.entity';
 import { UpdateSurvey } from './dto/update-survey.dto'
 import { SurveyService } from './survey.service';
+import { CreateSurveyDto } from './dto/create-survey.dto';
 
 @ApiTags('survey')
 @ApiBearerAuth()
@@ -33,6 +34,11 @@ export class SurveyController {
   remove(@Param('id') id: string): Promise<void> {
     return this.surveyService.remove(id);
   }
+
+  @Post()
+    create(@Body() survey: CreateSurveyDto): Promise<Survey> {
+      return this.surveyService.create(survey);
+    }
 
 
 }

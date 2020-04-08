@@ -1,7 +1,7 @@
 import { Surveycategorie } from "../../surveycategorie/surveycategorie.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateSurvey{
+export class CreateSurveyDto{
 
     @ApiProperty()
     categorie : Promise<Surveycategorie>;
