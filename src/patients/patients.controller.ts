@@ -27,6 +27,7 @@ import { RemoveTemperaturesDto } from './dto/remove-temperatures.dto';
 import { Tracking } from 'src/tracking/tracking.entity';
 import { NewTrackingDto } from './dto/new-tracking.dto';
 import { RemoveTrackingsDto } from './dto/remove-trackings.dto';
+import { Test } from 'src/tests/tests.entity';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -269,5 +270,36 @@ export class PatientsController {
   @UseGuards(RolesGuard)
   removeTrackings(@Param('id') id: string, @Body() removeTrackingsDto: RemoveTrackingsDto): Promise<void> {
     return this.patientsService.removeTrackings(id, removeTrackingsDto);
+  }
+
+  @Get(':id/tests')
+  @ApiQuery({
+    name: 'withCarer',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, carer will be shown inside each test. The default value is false.'
+  })
+  // @ApiQuery({
+  //   name: 'withTemperature',
+  //   type: 'boolean',
+  //   required: false,
+  //   description: 'If enable, temperature will be shown inside each test. The default value is false.'
+  // })
+  @ApiQuery({
+    name: 'withSymptoms',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, symptoms will be shown inside each test. The default value is false.'
+  })
+  // @ApiQuery({
+  //   name: 'withSurveyAnswers',
+  //   type: 'boolean',
+  //   required: false,
+  //   description: 'If enable, surveyAnswers will be shown inside each test. The default value is false.'
+  // })
+  @Roles('Admin', 'Labo', 'Patient', 'Doctor', 'Ide', 'Monitor')
+  @UseGuards(RolesGuard)
+  getTests(@Param('id') id: string, @Query('withCarer') withCarer, @Query('withTemperature') withTemperature, @Query('withSymptoms') withSymptoms, @Query('withSurveyAnswers') withSurveyAnswers): Promise<Test[]> {
+    return this.patientsService.getTests(id, withCarer && withCarer == 'true', withTemperature && withTemperature == 'true', withSymptoms && withSymptoms == 'true', withSurveyAnswers && withSurveyAnswers == 'true');
   }
 }

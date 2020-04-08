@@ -161,12 +161,16 @@ export class PatientsService {
   getTrackings(id: string, withCarer: boolean = false): Promise<Tracking[]> {
     return this.patientsRepository.getTrackings(id, withCarer);
   }
-
+  
   newTracking(id: string, newTrackingDto: NewTrackingDto): Promise<void> {
     return this.patientsRepository.addNewTracking(id, newTrackingDto);
   }
-
+  
   removeTrackings(id: string, removeTrackingsDto: RemoveTrackingsDto): Promise<void> {
     return this.patientsRepository.removeTrackings(id, removeTrackingsDto);
+  }
+
+  getTests(id: string, withCarer: boolean = false, withTemperature: boolean = false, withSymptoms: boolean = false, withSurveyAnswers: boolean = false) {
+    return this.patientsRepository.getTests(id, withCarer, withTemperature, withSymptoms, withSurveyAnswers);
   }
 }

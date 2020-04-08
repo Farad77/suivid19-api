@@ -20,6 +20,7 @@ import { RemoveTemperaturesDto } from './dto/remove-temperatures.dto';
 import { Tracking } from 'src/tracking/tracking.entity';
 import { NewTrackingDto } from './dto/new-tracking.dto';
 import { RemoveTrackingsDto } from './dto/remove-trackings.dto';
+import { Test } from 'src/tests/tests.entity';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
@@ -274,7 +275,7 @@ export class PatientRepository extends Repository<Patient> {
   }
 
   async addNewTracking(id: string, newTrackingDto: NewTrackingDto) {
-    const TrackingRepository = this.manager.getRepository(Tracking);
+    const trackingRepository = this.manager.getRepository(Tracking);
     const patient = new Patient();
     patient.id = parseInt(id);
 
@@ -286,7 +287,7 @@ export class PatientRepository extends Repository<Patient> {
     tracking.date = newTrackingDto.date;
     tracking.comment = newTrackingDto.comment;
 
-    await TrackingRepository.save(tracking);
+    await trackingRepository.save(tracking);
     // TODO: manage error : return 500 if there is error
   }
 
@@ -300,5 +301,46 @@ export class PatientRepository extends Repository<Patient> {
         patient: id,
       })
       .execute();
+  }
+
+  async getTests(id: string, withCarer: boolean = false, withTemperature: boolean = false, withSymptoms: boolean = false, withSurveyAnswers: boolean = false) {
+    const testRepository = this.manager.getRepository(Test);
+    let relations = [];
+
+    if (withCarer) {
+      relations.push('carer');
+    }
+
+    // if (withTemperature) {
+    //   relations.push('temperature');
+    // }
+
+    if (withSymptoms) {
+      relations.push('symptoms');
+    }
+
+    // if (withSurveyAnswers) {
+    //   relations.push('surveyanswers');
+    // }
+
+    return testRepository.find({ relations: relations, where: { patient: { id: id } } });
+
+    // return withCarers
+    //   ? await this.manager.createQueryBuilder()
+    //     .select('test')
+    //     .from(Test, 'test')
+    //     .leftJoinAndSelect('test.carer', 'user')
+    //     .where('"patientId" = :patient', {
+    //       patient: id
+    //     })
+    //     .getMany()
+
+    //   : await this.manager.createQueryBuilder()
+    //     .select('test')
+    //     .from(Test, 'test')
+    //     .where('"patientId" = :patient', {
+    //       patient: id
+    //     })
+    //     .getMany();
   }
 }
