@@ -6,6 +6,8 @@ import { Notification } from './notifications.entity';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
 import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CurrentUser } from 'src/current-user.decorator';
+import { Roles } from 'src/roles.decorator';
 
 @ApiTags('notifications')
 @ApiBearerAuth()
@@ -15,8 +17,8 @@ export class NotificationsController {
   constructor(private notificationsService: NotificationsService) { }
 
   @Get()
-  getAll(): Promise<Notification[]> {
-    return this.notificationsService.findAll();
+  getAll(@CurrentUser() currentUser): Promise<Notification[]> {
+    return this.notificationsService.findAll(currentUser);
   }
 
   @Get(':id')
@@ -28,18 +30,20 @@ export class NotificationsController {
   create(@Body() notification: CreateNotificationDto) {
     return notification;
   }
-
+  
+  @Roles('Admin')
   @Put(':id')
   update(@Param('id') id: string, @Body() notification: UpdateNotificationDto): Promise<UpdateResult> {
     return this.notificationsService.update(id, notification);
   }
 
+  @Roles('Admin')
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.notificationsService.remove(id);
   }
 
-  //Notification pour dosteur
+  //Notification pour docteur
   /*
   Format : Trie par symptomes (par gravité, Nombre de symptome, par température)
 {

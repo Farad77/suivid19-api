@@ -4,7 +4,9 @@ import { Patient } from 'src/patients/patients.entity';
 
 @ChildEntity()
 export class Doctor extends User {
-  @OneToMany(type => Patient, patient => patient.doctor)
+  @OneToMany(type => Patient, patient => patient.doctor, {
+    cascade: true
+  })
   patients: Promise<Patient[]>;
 
   @Column({ default: false })
