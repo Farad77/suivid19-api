@@ -50,6 +50,5 @@ export class Patient extends User {
   attachments: Promise<Attachment[]>;
 
   @ManyToOne(type => Doctor, doctor => doctor.patients)
-  @JoinColumn({ name: 'doctorId' })
   doctor: Promise<Doctor>;
 }
