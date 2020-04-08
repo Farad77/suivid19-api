@@ -13,6 +13,14 @@ import { UnlinkIdesDto } from './dto/unlink-ides.dto';
 import { Attachment } from 'src/attachments/attachments.entity';
 import { NewAttachmentsDto } from './dto/new-attachments.dto';
 import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
+import { Doctor } from 'src/doctors/doctors.entity';
+import { Temperature } from 'src/temperature/temperature.entity';
+import { NewTemperatureDto } from './dto/new-temperature.dto';
+import { RemoveTemperaturesDto } from './dto/remove-temperatures.dto';
+import { Tracking } from 'src/tracking/tracking.entity';
+import { NewTrackingDto } from './dto/new-tracking.dto';
+import { RemoveTrackingsDto } from './dto/remove-trackings.dto';
+import { Test } from 'src/tests/tests.entity';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
@@ -192,5 +200,129 @@ export class PatientRepository extends Repository<Patient> {
         patient: id,
       })
       .execute();
+  }
+
+  async getDoctor(id: string) {
+    const { doctor } = await this.findOne(id, { relations: ['doctor'] });
+    return doctor;
+  }
+
+  async setDoctor(id: string, doctorId: string) {
+    const user = await this.findOne(id, { relations: ['doctor'] });
+    const doctor = new Doctor();
+    doctor.id = parseInt(doctorId);
+    user.doctor = Promise.resolve(doctor);
+
+    await this.save(user);
+  }
+
+  async getTemperatures(id: string) {
+    return await this.manager
+      .createQueryBuilder()
+      .select('temperature')
+      .from(Temperature, 'temperature')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany();
+  }
+
+  async addNewTemperature(id: string, newTemperatureDto: NewTemperatureDto) {
+    const temperatureRepository = this.manager.getRepository(Temperature);
+    const patient = new Patient();
+    patient.id = parseInt(id);
+
+    const temperature = new Temperature();
+    temperature.patient = Promise.resolve(patient);
+    temperature.value = newTemperatureDto.value;
+    temperature.comment = newTemperatureDto.comment;
+    temperature.date = newTemperatureDto.date;
+
+    await temperatureRepository.save(temperature);
+    // TODO: manage error : return 500 if there is error
+  }
+
+  async removeTemperatures(id: string, removeTemperaturesDto: RemoveTemperaturesDto) {
+    await this.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Temperature)
+      .where('"id" IN (:...ids) AND "patientId" = :patient', {
+        ids: removeTemperaturesDto.temperatures.map(removeTemperatureDto => removeTemperatureDto.id),
+        patient: id,
+      })
+      .execute();
+  }
+  
+  async getTrackings(id: string, withCarer: boolean = false) {
+    return withCarer
+      ? await this.manager.createQueryBuilder()
+      .select('tracking')
+      .from(Tracking, 'tracking')
+      .leftJoinAndSelect('tracking.carer', 'user')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany()
+
+      : await this.manager.createQueryBuilder()
+        .select('tracking')
+        .from(Tracking, 'tracking')
+        .where('"patientId" = :patient', {
+          patient: id
+        })
+        .getMany();
+  }
+
+  async addNewTracking(id: string, newTrackingDto: NewTrackingDto) {
+    const trackingRepository = this.manager.getRepository(Tracking);
+    const patient = new Patient();
+    patient.id = parseInt(id);
+
+    const tracking = new Tracking();
+    tracking.patient = Promise.resolve(patient);
+    tracking.carer = newTrackingDto.carer;
+    tracking.alertLevel = newTrackingDto.alertLevel;
+    tracking.location = newTrackingDto.location;
+    tracking.date = newTrackingDto.date;
+    tracking.comment = newTrackingDto.comment;
+
+    await trackingRepository.save(tracking);
+    // TODO: manage error : return 500 if there is error
+  }
+
+  async removeTrackings(id: string, removeTrackingsDto: RemoveTrackingsDto) {
+    await this.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Tracking)
+      .where('"id" IN (:...ids) AND "patientId" = :patient', {
+        ids: removeTrackingsDto.trackings.map(removeTrackingDto => removeTrackingDto.id),
+        patient: id,
+      })
+      .execute();
+  }
+
+  async getTests(id: string, withCarer: boolean = false, withTemperature: boolean = false, withSymptoms: boolean = false, withSurveyAnswers: boolean = false) {
+    const testRepository = this.manager.getRepository(Test);
+    let relations = [];
+
+    if (withCarer) {
+      relations.push('carer');
+    }
+
+    // if (withTemperature) {
+    //   relations.push('temperature');
+    // }
+
+    if (withSymptoms) {
+      relations.push('symptoms');
+    }
+
+    // if (withSurveyAnswers) {
+    //   relations.push('surveyanswers');
+    // }
+
+    return testRepository.find({ relations: relations, where: { patient: { id: id } } });
   }
 }

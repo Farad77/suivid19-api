@@ -30,7 +30,7 @@ export class NotificationsController {
   create(@Body() notification: CreateNotificationDto) {
     return notification;
   }
-  
+
   @Roles('Admin')
   @Put(':id')
   update(@Param('id') id: string, @Body() notification: UpdateNotificationDto): Promise<UpdateResult> {
@@ -45,6 +45,8 @@ export class NotificationsController {
 
   //Notification pour docteur
   /*
+
+  Partie NOTIF ok 
   Format : Trie par symptomes (par gravité, Nombre de symptome, par température)
 {
   Nicolas(Patient): [39°, fievre, ... (Les symptomes négatifs)],
@@ -57,4 +59,5 @@ export class NotificationsController {
    *Vérifie la derniere fois que l'user a pris sa temp (tt les 6h)
    * message : Vous devez prélever votre température
    */
+  
 }

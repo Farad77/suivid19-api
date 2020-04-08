@@ -1,14 +1,8 @@
-import { ChildEntity, OneToMany, Column } from 'typeorm';
+import { ChildEntity, Column } from 'typeorm';
 import { User } from 'src/users/users.entity';
-import { Patient } from 'src/patients/patients.entity';
 
 @ChildEntity()
 export class Doctor extends User {
-  @OneToMany(type => Patient, patient => patient.doctor, {
-    cascade: true
-  })
-  patients: Promise<Patient[]>;
-
   @Column({ default: false })
   isPersonnal: boolean;
 }

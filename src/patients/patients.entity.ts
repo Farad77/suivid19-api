@@ -50,7 +50,8 @@ export class Patient extends User {
   @OneToMany(type => Attachment, attachment => attachment.patient)
   attachments: Promise<Attachment[]>;
 
-  @ManyToOne(type => Doctor, doctor => doctor.patients)
+  @ManyToOne(type => Doctor)
+  @JoinColumn({ name: 'doctorId' })
   doctor: Promise<Doctor>;
 
   @OneToMany(type => Temperature, temp => temp.patient)

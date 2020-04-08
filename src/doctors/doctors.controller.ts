@@ -1,11 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Query } from '@nestjs/common';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { DoctorsService } from './doctors.service';
 import { Doctor } from './doctors.entity';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Patient } from 'src/patients/patients.entity';
+import { LinkPatientsDto } from './dto/link-patients.dto';
+import { UnlinkPatientsDto } from './dto/unlink-patients.dto';
 
 @ApiTags('doctors')
 @ApiBearerAuth()
@@ -15,14 +18,8 @@ export class DoctorsController {
   constructor(private doctorsService: DoctorsService) { }
 
   @Get()
-  @ApiQuery({
-    name: 'withPatients',
-    type: 'boolean',
-    required: false,
-    description: 'If enable, patients will be shown inside each doctor. The default value is false.'
-  })
-  getAll(@Query('withPatients') withPatients): Promise<Doctor[]> {
-    return this.doctorsService.findAll(withPatients && withPatients == 'true');
+  getAll(): Promise<Doctor[]> {
+    return this.doctorsService.findAll();
   }
 
   @Post()
@@ -31,14 +28,8 @@ export class DoctorsController {
   }
 
   @Get(':id')
-  @ApiQuery({
-    name: 'withPatients',
-    type: 'boolean',
-    required: false,
-    description: 'If enable, patients will be shown inside each doctor. The default value is false.'
-  })
-  get(@Param('id') id: string, @Query('withPatients') withPatients): Promise<Doctor> {
-    return this.doctorsService.findOne(id, withPatients && withPatients == 'true');
+  get(@Param('id') id: string): Promise<Doctor> {
+    return this.doctorsService.findOne(id);
   }
 
   @Put(':id')
@@ -49,5 +40,44 @@ export class DoctorsController {
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.doctorsService.remove(id);
+  }
+
+  @Get(':id/patients')
+  @ApiQuery({
+    name: 'withContacts',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, contacts will be shown inside each patient. The default value is false.'
+  })
+  @ApiQuery({
+    name: 'withIdes',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, ides will be shown inside each patient. The default value is false.'
+  })
+  @ApiQuery({
+    name: 'withRelatives',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, relatives will be shown inside each patient. The default value is false.'
+  })
+  @ApiQuery({
+    name: 'withAttachments',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, attachments will be shown inside each patient. The default value is false.'
+  })
+  getPatients(@Param('id') id: string, @Query('withContacts') withContacts, @Query('withIdes') withIdes, @Query('withRelatives') withRelatives, @Query('withAttachments') withAttachments): Promise<Patient[]> {
+    return this.doctorsService.getPatients(id, withContacts && withContacts == 'true', withIdes && withIdes == 'true', withRelatives && withRelatives == 'true', withAttachments && withAttachments == 'true');
+  }
+
+  @Put(':id/link/patients')
+  linkPatients(@Param('id') id: string, @Body() linkPatientsDto: LinkPatientsDto): Promise<void> {
+    return this.doctorsService.linkPatients(id, linkPatientsDto);
+  }
+
+  @Delete(':id/unlink/patients')
+  unlinkPatients(@Param('id') id: string, @Body() unlinkPatientsDto: UnlinkPatientsDto): Promise<void> {
+    return this.doctorsService.unlinkPatients(id, unlinkPatientsDto);
   }
 }
