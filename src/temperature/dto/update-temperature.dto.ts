@@ -1,7 +1,8 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
 import { Patient } from "../../patients/patients.entity";
 
-export class CreateTemperatureDto{
+
+export class UpdateTemperatureDto{
 
     @ApiProperty()
     value : number;
@@ -9,10 +10,10 @@ export class CreateTemperatureDto{
     @ApiProperty()
     patient : Promise<Patient>;
 
-    @ApiProperty()
+    @ApiPropertyOptional()
     comment : string;
 
     @ApiProperty()
     date : Date;
-    
+
 }
