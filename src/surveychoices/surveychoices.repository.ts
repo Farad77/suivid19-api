@@ -13,6 +13,17 @@ export class SurveychoicesRepository extends Repository<Surveychoices>{
         surveyChoice.survey  = Promise.resolve(createSurveyChoiceDto.survey);
         return await this.save(surveyChoice);
       }
+
+      async getAllSurveyChoiceBySurvey(id : string){
+
+        return await this.manager.createQueryBuilder()
+        .select('surveychoices')
+        .from(Surveychoices, 'surveychoices')
+        .where('"surveyId" = :survey', {
+          survey: id
+        }).getMany();
+
+      }
     
 
 }

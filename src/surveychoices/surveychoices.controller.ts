@@ -35,4 +35,11 @@ export class SurveychoicesController {
     return this.surveyChoicesService.remove(id);
   }
 
+  @Get(':surveyId')
+  getChoiceBySurvey(@Param('surveyId') surveyId : string) : Promise<Surveychoices[]>{
+
+    return this.surveyChoicesService.getChoicesBySurvey(surveyId);
+
+  } 
+
 }

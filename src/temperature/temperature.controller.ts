@@ -7,6 +7,7 @@ import { UpdateResult } from 'typeorm';
 import { UpdateTemperatureDto } from './dto/update-temperature.dto';
 import { CreateTemperatureDto } from './dto/create-temperature.dto';
 import { CurrentUser } from '../current-user.decorator';
+import { Patient } from '../patients/patients.entity';
 
 @ApiTags('temperature')
 @ApiBearerAuth()
@@ -17,27 +18,31 @@ export class TemperatureController {
 
     constructor(private temperatureService: TemperatureService) { }
   
-    @Get(':patient')
-    getAll(@Param('patient') @CurrentUser() currentUser): Promise<Temperature[]> {
-      return this.temperatureService.findAll(currentUser);
-    }
-  
+    @Get()
+    getAll(): Promise<Temperature[]> {
+    return this.temperatureService.findAll();
+  }
+
     @Get(':id')
     get(@Param('id') id: string): Promise<Temperature> {
       return this.temperatureService.findOne(id);
     }
 
+    @Get(':patientId')
+    getAllTemp(@Param('patientId') id : string): Promise<Temperature[]> {
+      return this.temperatureService.findAllTemperatureByPatient(id);
+    }
+
+    @Get(':patient')
+    getAllTempByPatient(@Param('patient') patient : Patient): Promise<Temperature[]> {
+      return this.temperatureService.findAllByPatient(patient);
+    }
 
     @Post()
     create(@Body() temperature: CreateTemperatureDto) {
-        return temperature;
+        return this.temperatureService.create(temperature);
     }
 
-    @Post(':patient')
-    getAllPost(@Param('patient') @CurrentUser() currentUser): Promise<Temperature[]> {
-      return this.temperatureService.findAll(currentUser);
-    }
-  
     @Put(':id')
     update(@Param('id') id: string, @Body() temperature: UpdateTemperatureDto): Promise<UpdateResult> {
       return this.temperatureService.update(id, temperature);
@@ -48,4 +53,10 @@ export class TemperatureController {
       return this.temperatureService.remove(id);
     }
 
+    @Post('doctor')
+    getAllPatient(@Param('doctor') id : string) :Promise<Temperature[]> {
+      return this.temperatureService.findAllPatientByDoctor(id);
+    } 
+
+    
 }

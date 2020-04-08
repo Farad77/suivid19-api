@@ -31,5 +31,9 @@ export class SurveychoicesService {
     await this.surveyChoicesRepository.delete(id);
   }
 
+  getChoicesBySurvey(id : string){
+    return this.surveyChoicesRepository.getAllSurveyChoiceBySurvey(id);
+  }
+
 
 }

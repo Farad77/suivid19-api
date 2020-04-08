@@ -4,20 +4,23 @@ import { Temperature } from './temperature.entity';
 import { CreateTemperatureDto } from './dto/create-temperature.dto';
 import { UpdateResult } from 'typeorm';
 import { UpdateTemperatureDto } from './dto/update-temperature.dto';
-import { User } from '../users/users.entity';
+import { Patient } from '../patients/patients.entity';
 
 @Injectable()
 export class TemperatureService {
 
     constructor(private temperatureRepository: TemperatureRepository) { }
 
+    findAll(): Promise<Temperature[]> {
+      return this.temperatureRepository.find({relations: ['patient']}) ;
+    }
 
   create(temperatureDto: CreateTemperatureDto): Promise<Temperature> {
     return this.temperatureRepository.createTemperature(temperatureDto);
   }
 
   findOne(id: string): Promise<Temperature> {
-    return this.temperatureRepository.findOne(id);
+    return this.temperatureRepository.findOne(id, {relations: ['patient']});
   }
 
   update(id: string, updateTemperatureDto: UpdateTemperatureDto): Promise<UpdateResult> {
@@ -28,12 +31,16 @@ export class TemperatureService {
     await this.temperatureRepository.delete(id);
   }
 
-  findAll(currentUser : User): Promise<Temperature[]> {
-    return this.temperatureRepository.find({where: {patient : currentUser}});
+  findAllTemperatureByPatient(id : string): Promise<Temperature[]> {
+    return this.temperatureRepository.getAllTempByPatient(id) ;
   }
 
-  findAllPatientByDoctor(currentUser : User) : Promise<Temperature[]>{
-    return this.temperatureRepository.getTemperaturePatientByDoctor(currentUser);
+  findAllPatientByDoctor(id: string) : Promise<Temperature[]>{
+    return this.temperatureRepository.getTemperaturePatientByDoctor(id);
+  }
+
+  findAllByPatient(patient: Patient): Promise<Temperature[]> {
+    return this.temperatureRepository.find({ where: { patient: patient } });
   }
   
 }

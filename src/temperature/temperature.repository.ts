@@ -20,9 +20,20 @@ export class TemperatureRepository extends Repository<Temperature>{
         return await this.save(temperature);
       }
 
-      async getTemperaturePatientByDoctor(currentUser : User) : Promise<Temperature[]>{
+      async getTemperaturePatientByDoctor(id : string) : Promise<Temperature[]>{
 
-       
+        this.docteur = Promise.resolve(this.manager.createQueryBuilder()
+        .select('doctor').from(Doctor, 'doctor')
+        .where('"doctorId" = :doctor', {
+          doctor: id
+        }).getOne());
+
+        this.liste = this.manager
+          .createQueryBuilder()
+          .select('temperature')
+          .from(Temperature, 'temperature')
+          .where("temperature.patient IN (:...patients)", { patients: (await this.docteur).patients })
+          .getMany();
         /*if(currentUser.role == "Doctor"){
   
          this.docteur = Promise.resolve(this.manager.createQueryBuilder()
@@ -40,6 +51,16 @@ export class TemperatureRepository extends Repository<Temperature>{
         }*/
           return this.liste;
         
+      }
+
+      async getAllTempByPatient(id : string){
+
+       return this.manager.createQueryBuilder()
+        .select('temperature').from(Temperature, 'temperature')
+        .where('"patientId" = :patient', {
+          patient: id
+        }).getMany();
+
       }
     
 }

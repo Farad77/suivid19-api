@@ -5,6 +5,7 @@ import { Ide } from 'src/ides/ides.entity';
 import { Contact } from 'src/contacts/contacts.entity';
 import { Attachment } from 'src/attachments/attachments.entity';
 import { Doctor } from 'src/doctors/doctors.entity';
+import { Temperature } from '../temperature/temperature.entity';
 
 export enum Gender {
   OTHER = 0,
@@ -51,4 +52,7 @@ export class Patient extends User {
 
   @ManyToOne(type => Doctor, doctor => doctor.patients)
   doctor: Promise<Doctor>;
+
+  @OneToMany(type => Temperature, temp => temp.patient)
+  temperatures: Promise<Temperature[]>;
 }

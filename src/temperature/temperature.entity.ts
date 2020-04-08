@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, Entity } from "typeorm";
+import { PrimaryGeneratedColumn, Column, JoinColumn, Entity, ManyToOne } from "typeorm";
 import { Patient } from "../patients/patients.entity";
 
 @Entity()
@@ -11,8 +11,8 @@ export class Temperature{
     @Column()
     value : number;
 
-    @OneToOne(type => Patient)
-    @JoinColumn()
+    @ManyToOne(type => Patient, patient => patient.temperatures)
+    @JoinColumn({ name: 'patientId' })
     patient : Promise<Patient>;
 
     @Column({length : 255})

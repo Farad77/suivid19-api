@@ -16,10 +16,10 @@ export class Survey{
     @Column({length : 255})
     description : string;
 
-    @Column()
+    @Column({ default: true })
     hasChoice : boolean;
 
-    @Column()
+    @Column({ default: true })
     isRequired : boolean;
   
 
