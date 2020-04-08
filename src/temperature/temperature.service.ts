@@ -31,5 +31,9 @@ export class TemperatureService {
   findAll(currentUser : User): Promise<Temperature[]> {
     return this.temperatureRepository.find({where: {patient : currentUser}});
   }
+
+  findAllPatientByDoctor(currentUser : User) : Promise<Temperature[]>{
+    return this.temperatureRepository.getTemperaturePatientByDoctor(currentUser);
+  }
   
 }

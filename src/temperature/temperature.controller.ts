@@ -17,8 +17,8 @@ export class TemperatureController {
 
     constructor(private temperatureService: TemperatureService) { }
   
-    @Get()
-    getAll(@CurrentUser() currentUser): Promise<Temperature[]> {
+    @Get(':patient')
+    getAll(@Param('patient') @CurrentUser() currentUser): Promise<Temperature[]> {
       return this.temperatureService.findAll(currentUser);
     }
   
@@ -27,9 +27,15 @@ export class TemperatureController {
       return this.temperatureService.findOne(id);
     }
 
+
     @Post()
     create(@Body() temperature: CreateTemperatureDto) {
         return temperature;
+    }
+
+    @Post(':patient')
+    getAllPost(@Param('patient') @CurrentUser() currentUser): Promise<Temperature[]> {
+      return this.temperatureService.findAll(currentUser);
     }
   
     @Put(':id')

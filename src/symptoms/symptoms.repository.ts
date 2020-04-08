@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from "typeorm";
 import { Symptoms } from "./symptoms.entity";
-import { CreateSymptomDto } from "./dto/createSymptomDto";
+import { CreateSymptomDto } from "./dto/create-symptoms.dto";
 
 @EntityRepository(Symptoms)
 export class SymptomsRepository extends Repository<Symptoms> {

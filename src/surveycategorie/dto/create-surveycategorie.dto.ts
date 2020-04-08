@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateSurveyCategorie{
+export class CreateSurveyCategorieDto{
 
     @ApiProperty()
     id : number;
