@@ -2,6 +2,8 @@ import { EntityRepository, Repository } from 'typeorm';
 import { Doctor } from './doctors.entity';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { Patient } from 'src/patients/patients.entity';
+import { LinkPatientsDto } from './dto/link-patients.dto';
+import { UnlinkPatientsDto } from './dto/unlink-patients.dto';
 
 @EntityRepository(Doctor)
 export class DoctorRepository extends Repository<Doctor> {
@@ -41,5 +43,30 @@ export class DoctorRepository extends Repository<Doctor> {
     }
 
     return patientRepository.find({ relations: relations, where: { doctor: { id: id } } });
+  }
+
+  async linkPatients(id: string, linkPatientsDto: LinkPatientsDto) {
+    const patientRepository = this.manager.getRepository(Patient);
+    const doctor = await this.findOne(id);
+
+    linkPatientsDto.patients.forEach(async linkPatientDto => {
+      const user = await patientRepository.findOne(linkPatientDto.id, { relations: ['doctor'] });
+      user.doctor = Promise.resolve(doctor);
+
+      await patientRepository.save(user);
+      // TODO: manage error : return 500 if there is error
+    });
+  }
+
+  async unlinkPatients(id: string, unlinkPatientsDto: UnlinkPatientsDto) {
+    await this.manager
+      .createQueryBuilder()
+      .update(Patient)
+      .set({ doctor: null })
+      .where('"id" IN (:...ids) AND "doctorId" = :doctor', {
+        ids: unlinkPatientsDto.patients.map(unlinkPatientDto => unlinkPatientDto.id),
+        doctor: id
+      })
+      .execute();
   }
 }

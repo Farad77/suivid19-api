@@ -7,6 +7,8 @@ import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Patient } from 'src/patients/patients.entity';
+import { LinkPatientsDto } from './dto/link-patients.dto';
+import { UnlinkPatientsDto } from './dto/unlink-patients.dto';
 
 @ApiTags('doctors')
 @ApiBearerAuth()
@@ -67,5 +69,15 @@ export class DoctorsController {
   })
   getPatients(@Param('id') id: string, @Query('withContacts') withContacts, @Query('withIdes') withIdes, @Query('withRelatives') withRelatives, @Query('withAttachments') withAttachments): Promise<Patient[]> {
     return this.doctorsService.getPatients(id, withContacts && withContacts == 'true', withIdes && withIdes == 'true', withRelatives && withRelatives == 'true', withAttachments && withAttachments == 'true');
+  }
+
+  @Put(':id/link/patients')
+  linkPatients(@Param('id') id: string, @Body() linkPatientsDto: LinkPatientsDto): Promise<void> {
+    return this.doctorsService.linkPatients(id, linkPatientsDto);
+  }
+
+  @Delete(':id/unlink/patients')
+  unlinkPatients(@Param('id') id: string, @Body() unlinkPatientsDto: UnlinkPatientsDto): Promise<void> {
+    return this.doctorsService.unlinkPatients(id, unlinkPatientsDto);
   }
 }
