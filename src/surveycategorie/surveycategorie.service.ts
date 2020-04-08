@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { SurveycategorieRepository } from './surveycategorie.repostitory';
 import { Surveycategorie } from './surveycategorie.entity';
-import { CreateSurveyCategorie } from './dto/create-surveycategorie.dto';
+import {  CreateSurveyCategorieDto } from './dto/create-surveycategorie.dto';
 import { UpdateResult } from 'typeorm';
-import { UpdateSurveyCategorie } from './dto/update-surveycategorie.dto';
+import {  UpdateSurveyCategorieDto } from './dto/update-surveycategorie.dto';
 
 @Injectable()
 export class SurveycategorieService {
@@ -14,7 +14,7 @@ export class SurveycategorieService {
     return this.surveyCategorieRepository.find();
   }
 
-  create(surveyCategorieCreate: CreateSurveyCategorie): Promise<Surveycategorie> {
+  create(surveyCategorieCreate: CreateSurveyCategorieDto): Promise<Surveycategorie> {
     return this.surveyCategorieRepository.createSurveyCategorie(surveyCategorieCreate);
   }
 
@@ -22,7 +22,7 @@ export class SurveycategorieService {
     return this.surveyCategorieRepository.findOne(id);
   }
 
-  update(id: string, updateSurveyCategorieDto: UpdateSurveyCategorie): Promise<UpdateResult> {
+  update(id: string, updateSurveyCategorieDto: UpdateSurveyCategorieDto): Promise<UpdateResult> {
     return this.surveyCategorieRepository.update(id, updateSurveyCategorieDto);
   }
 

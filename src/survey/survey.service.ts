@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SurveyRepository } from './survey.repository';
 import { Survey } from './survey.entity';
-import { CreateSurvey } from './dto/create-survey.dto';
+import {  CreateSurveyDto } from './dto/create-survey.dto';
 import { UpdateResult } from 'typeorm';
 import { UpdateSurvey } from './dto/update-survey.dto';
 
@@ -14,7 +14,7 @@ export class SurveyService {
       return this.surveyRepository.find();
     }
   
-    create(surveyDto: CreateSurvey): Promise<Survey> {
+    create(surveyDto: CreateSurveyDto): Promise<Survey> {
       return this.surveyRepository.createSurvey(surveyDto);
     }
   

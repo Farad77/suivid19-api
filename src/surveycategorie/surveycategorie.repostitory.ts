@@ -1,12 +1,12 @@
 import { Surveycategorie } from "./surveycategorie.entity";
-import { CreateSurveyCategorie } from "./dto/create-surveycategorie.dto";
+import {  CreateSurveyCategorieDto } from "./dto/create-surveycategorie.dto";
 import { Survey } from "../survey/survey.entity";
 import { Repository, EntityRepository } from "typeorm";
 
 @EntityRepository(Survey)
 export class SurveycategorieRepository extends Repository<Survey> {
 
-    async createSurveyCategorie(createCategorie: CreateSurveyCategorie) {
+    async createSurveyCategorie(createCategorie: CreateSurveyCategorieDto) {
         const categorie = new Surveycategorie();
         
         categorie.description = createCategorie.description;

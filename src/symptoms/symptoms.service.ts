@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Symptoms } from './symptoms.entity';
 import { SymptomsRepository } from './symptoms.repository';
-import { CreateSymptomDto } from './dto/createSymptomDto';
+import { CreateSymptomDto } from './dto/create-symptoms.dto';
 import { UpdateResult } from 'typeorm';
 import { UpdateSymptomDto } from './dto/update-symptoms.dto';
 
