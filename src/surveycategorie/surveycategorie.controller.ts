@@ -38,7 +38,6 @@ export class SurveycategorieController {
     @Post()
     create(@Body() categorieSurvey: CreateSurveyCategorieDto): Promise<Surveycategorie> {
       return this.surveycategorieService.create(categorieSurvey);
-
     }
 
 }

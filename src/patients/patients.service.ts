@@ -16,6 +16,13 @@ import { Ide } from 'src/ides/ides.entity';
 import { Attachment } from 'src/attachments/attachments.entity';
 import { NewAttachmentsDto } from './dto/new-attachments.dto';
 import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
+import { Doctor } from 'src/doctors/doctors.entity';
+import { Temperature } from 'src/temperature/temperature.entity';
+import { NewTemperatureDto } from './dto/new-temperature.dto';
+import { RemoveTemperaturesDto } from './dto/remove-temperatures.dto';
+import { Tracking } from 'src/tracking/tracking.entity';
+import { NewTrackingDto } from './dto/new-tracking.dto';
+import { RemoveTrackingsDto } from './dto/remove-trackings.dto';
 
 @Injectable()
 export class PatientsService {
@@ -125,5 +132,45 @@ export class PatientsService {
 
   removeAttachments(id: string, removeAttachmentsDto: RemoveAttachmentsDto): Promise<void> {
     return this.patientsRepository.removeAttachments(id, removeAttachmentsDto);
+  }
+
+  getDoctor(id: string): Promise<Doctor> {
+    return this.patientsRepository.getDoctor(id);
+  }
+
+  setDoctor(id: string, doctorId: string): Promise<void> {
+    return this.patientsRepository.setDoctor(id, doctorId);
+  }
+
+  unsetDoctor(id: string): Promise<UpdateResult> {
+    return this.patientsRepository.update(id, { doctor: null });
+  }
+
+  getTemperatures(id: string): Promise<Temperature[]> {
+    return this.patientsRepository.getTemperatures(id);
+  }
+
+  newTemperature(id: string, newTemperatureDto: NewTemperatureDto): Promise<void> {
+    return this.patientsRepository.addNewTemperature(id, newTemperatureDto);
+  }
+
+  removeTemperatures(id: string, removeTemperaturesDto: RemoveTemperaturesDto): Promise<void> {
+    return this.patientsRepository.removeTemperatures(id, removeTemperaturesDto);
+  }
+
+  getTrackings(id: string, withCarer: boolean = false): Promise<Tracking[]> {
+    return this.patientsRepository.getTrackings(id, withCarer);
+  }
+  
+  newTracking(id: string, newTrackingDto: NewTrackingDto): Promise<void> {
+    return this.patientsRepository.addNewTracking(id, newTrackingDto);
+  }
+  
+  removeTrackings(id: string, removeTrackingsDto: RemoveTrackingsDto): Promise<void> {
+    return this.patientsRepository.removeTrackings(id, removeTrackingsDto);
+  }
+
+  getTests(id: string, withCarer: boolean = false, withTemperature: boolean = false, withSymptoms: boolean = false, withSurveyAnswers: boolean = false) {
+    return this.patientsRepository.getTests(id, withCarer, withTemperature, withSymptoms, withSurveyAnswers);
   }
 }

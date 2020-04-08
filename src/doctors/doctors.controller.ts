@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { DoctorsService } from './doctors.service';
 import { Doctor } from './doctors.entity';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
@@ -15,14 +15,8 @@ export class DoctorsController {
   constructor(private doctorsService: DoctorsService) { }
 
   @Get()
-  @ApiQuery({
-    name: 'withPatients',
-    type: 'boolean',
-    required: false,
-    description: 'If enable, patients will be shown inside each doctor. The default value is false.'
-  })
-  getAll(@Query('withPatients') withPatients): Promise<Doctor[]> {
-    return this.doctorsService.findAll(withPatients && withPatients == 'true');
+  getAll(): Promise<Doctor[]> {
+    return this.doctorsService.findAll();
   }
 
   @Post()
@@ -31,14 +25,8 @@ export class DoctorsController {
   }
 
   @Get(':id')
-  @ApiQuery({
-    name: 'withPatients',
-    type: 'boolean',
-    required: false,
-    description: 'If enable, patients will be shown inside each doctor. The default value is false.'
-  })
-  get(@Param('id') id: string, @Query('withPatients') withPatients): Promise<Doctor> {
-    return this.doctorsService.findOne(id, withPatients && withPatients == 'true');
+  get(@Param('id') id: string): Promise<Doctor> {
+    return this.doctorsService.findOne(id);
   }
 
   @Put(':id')
