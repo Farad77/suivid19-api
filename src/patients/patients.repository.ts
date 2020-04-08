@@ -324,23 +324,5 @@ export class PatientRepository extends Repository<Patient> {
     // }
 
     return testRepository.find({ relations: relations, where: { patient: { id: id } } });
-
-    // return withCarers
-    //   ? await this.manager.createQueryBuilder()
-    //     .select('test')
-    //     .from(Test, 'test')
-    //     .leftJoinAndSelect('test.carer', 'user')
-    //     .where('"patientId" = :patient', {
-    //       patient: id
-    //     })
-    //     .getMany()
-
-    //   : await this.manager.createQueryBuilder()
-    //     .select('test')
-    //     .from(Test, 'test')
-    //     .where('"patientId" = :patient', {
-    //       patient: id
-    //     })
-    //     .getMany();
   }
 }
