@@ -17,6 +17,9 @@ import { Doctor } from 'src/doctors/doctors.entity';
 import { Temperature } from 'src/temperature/temperature.entity';
 import { NewTemperatureDto } from './dto/new-temperature.dto';
 import { RemoveTemperaturesDto } from './dto/remove-temperatures.dto';
+import { Tracking } from 'src/tracking/tracking.entity';
+import { NewTrackingDto } from './dto/new-tracking.dto';
+import { RemoveTrackingsDto } from './dto/remove-trackings.dto';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
@@ -245,6 +248,55 @@ export class PatientRepository extends Repository<Patient> {
       .from(Temperature)
       .where('"id" IN (:...ids) AND "patientId" = :patient', {
         ids: removeTemperaturesDto.temperatures.map(removeTemperatureDto => removeTemperatureDto.id),
+        patient: id,
+      })
+      .execute();
+  }
+  
+  async getTrackings(id: string, withCarers: boolean = false) {
+    return withCarers 
+      ? await this.manager.createQueryBuilder()
+      .select('tracking')
+      .from(Tracking, 'tracking')
+      .leftJoinAndSelect('tracking.carer', 'user')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany()
+
+      : await this.manager.createQueryBuilder()
+        .select('tracking')
+        .from(Tracking, 'tracking')
+        .where('"patientId" = :patient', {
+          patient: id
+        })
+        .getMany();
+  }
+
+  async addNewTracking(id: string, newTrackingDto: NewTrackingDto) {
+    const TrackingRepository = this.manager.getRepository(Tracking);
+    const patient = new Patient();
+    patient.id = parseInt(id);
+
+    const tracking = new Tracking();
+    tracking.patient = Promise.resolve(patient);
+    tracking.carer = newTrackingDto.carer;
+    tracking.alertLevel = newTrackingDto.alertLevel;
+    tracking.location = newTrackingDto.location;
+    tracking.date = newTrackingDto.date;
+    tracking.comment = newTrackingDto.comment;
+
+    await TrackingRepository.save(tracking);
+    // TODO: manage error : return 500 if there is error
+  }
+
+  async removeTrackings(id: string, removeTrackingsDto: RemoveTrackingsDto) {
+    await this.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Tracking)
+      .where('"id" IN (:...ids) AND "patientId" = :patient', {
+        ids: removeTrackingsDto.trackings.map(removeTrackingDto => removeTrackingDto.id),
         patient: id,
       })
       .execute();

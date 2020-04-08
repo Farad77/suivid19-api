@@ -24,6 +24,9 @@ import { Doctor } from 'src/doctors/doctors.entity';
 import { Temperature } from 'src/temperature/temperature.entity';
 import { NewTemperatureDto } from './dto/new-temperature.dto';
 import { RemoveTemperaturesDto } from './dto/remove-temperatures.dto';
+import { Tracking } from 'src/tracking/tracking.entity';
+import { NewTrackingDto } from './dto/new-tracking.dto';
+import { RemoveTrackingsDto } from './dto/remove-trackings.dto';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -239,5 +242,32 @@ export class PatientsController {
   @UseGuards(RolesGuard)
   removeTemperatures(@Param('id') id: string, @Body() removeTemperaturesDto: RemoveTemperaturesDto): Promise<void> {
     return this.patientsService.removeTemperatures(id, removeTemperaturesDto);
+  }
+
+  @Get(':id/trackings')
+  @ApiQuery({
+    name: 'withCarers',
+    type: 'boolean',
+    required: false,
+    description: 'If enable, carers will be shown inside each tracking. The default value is false.'
+  })
+  @Roles('Admin', 'Labo', 'Patient', 'Doctor', 'Ide', 'Monitor')
+  @UseGuards(RolesGuard)
+  getTrackings(@Param('id') id: string, @Query('withCarers') withCarers): Promise<Tracking[]> {
+    return this.patientsService.getTrackings(id, withCarers && withCarers == 'true');
+  }
+
+  @Post(':id/add/tracking')
+  @Roles('Admin', 'Patient', 'Doctor', 'Ide')
+  @UseGuards(RolesGuard)
+  newTracking(@Param('id') id: string, @Body() newTrackingDto: NewTrackingDto): Promise<void> {
+    return this.patientsService.newTracking(id, newTrackingDto);
+  }
+
+  @Delete(':id/del/Trackings')
+  @Roles('Admin', 'Patient', 'Doctor', 'Ide')
+  @UseGuards(RolesGuard)
+  removeTrackings(@Param('id') id: string, @Body() removeTrackingsDto: RemoveTrackingsDto): Promise<void> {
+    return this.patientsService.removeTrackings(id, removeTrackingsDto);
   }
 }

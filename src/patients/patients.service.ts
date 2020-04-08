@@ -20,6 +20,9 @@ import { Doctor } from 'src/doctors/doctors.entity';
 import { Temperature } from 'src/temperature/temperature.entity';
 import { NewTemperatureDto } from './dto/new-temperature.dto';
 import { RemoveTemperaturesDto } from './dto/remove-temperatures.dto';
+import { Tracking } from 'src/tracking/tracking.entity';
+import { NewTrackingDto } from './dto/new-tracking.dto';
+import { RemoveTrackingsDto } from './dto/remove-trackings.dto';
 
 @Injectable()
 export class PatientsService {
@@ -153,5 +156,17 @@ export class PatientsService {
 
   removeTemperatures(id: string, removeTemperaturesDto: RemoveTemperaturesDto): Promise<void> {
     return this.patientsRepository.removeTemperatures(id, removeTemperaturesDto);
+  }
+
+  getTrackings(id: string, withCarers: boolean = false): Promise<Tracking[]> {
+    return this.patientsRepository.getTrackings(id, withCarers);
+  }
+
+  newTracking(id: string, newTrackingDto: NewTrackingDto): Promise<void> {
+    return this.patientsRepository.addNewTracking(id, newTrackingDto);
+  }
+
+  removeTrackings(id: string, removeTrackingsDto: RemoveTrackingsDto): Promise<void> {
+    return this.patientsRepository.removeTrackings(id, removeTrackingsDto);
   }
 }
