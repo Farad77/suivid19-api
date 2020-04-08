@@ -4,6 +4,7 @@ import { DoctorRepository } from './doctors.repository';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { UpdateResult } from 'typeorm';
+import { Patient } from 'src/patients/patients.entity';
 
 @Injectable()
 export class DoctorsService {
@@ -27,5 +28,9 @@ export class DoctorsService {
 
   async remove(id: string): Promise<void> {
     await this.doctorsRepository.delete(id);
+  }
+
+  getPatients(id: string, withContacts: boolean = false, withIdes: boolean = false, withRelatives: boolean = false, withAttachments: boolean = false): Promise<Patient[]> {
+    return this.doctorsRepository.getPatients(id, withContacts, withIdes, withRelatives, withAttachments);
   }
 }
