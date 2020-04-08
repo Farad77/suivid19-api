@@ -6,6 +6,7 @@ import { Temperature } from './temperature.entity';
 import { UpdateResult } from 'typeorm';
 import { UpdateTemperatureDto } from './dto/update-temperature.dto';
 import { CreateTemperatureDto } from './dto/create-temperature.dto';
+import { CurrentUser } from '../current-user.decorator';
 
 @ApiTags('temperature')
 @ApiBearerAuth()
@@ -17,8 +18,8 @@ export class TemperatureController {
     constructor(private temperatureService: TemperatureService) { }
   
     @Get()
-    getAll(): Promise<Temperature[]> {
-      return this.temperatureService.findAll();
+    getAll(@CurrentUser() currentUser): Promise<Temperature[]> {
+      return this.temperatureService.findAll(currentUser);
     }
   
     @Get(':id')

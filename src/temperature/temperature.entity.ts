@@ -1,7 +1,7 @@
-import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
+import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, Entity } from "typeorm";
 import { Patient } from "../patients/patients.entity";
 
-
+@Entity()
 export class Temperature{
 
 

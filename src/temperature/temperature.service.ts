@@ -4,15 +4,13 @@ import { Temperature } from './temperature.entity';
 import { CreateTemperatureDto } from './dto/create-temperature.dto';
 import { UpdateResult } from 'typeorm';
 import { UpdateTemperatureDto } from './dto/update-temperature.dto';
+import { User } from '../users/users.entity';
 
 @Injectable()
 export class TemperatureService {
 
     constructor(private temperatureRepository: TemperatureRepository) { }
 
-  findAll(): Promise<Temperature[]> {
-    return this.temperatureRepository.find();
-  }
 
   create(temperatureDto: CreateTemperatureDto): Promise<Temperature> {
     return this.temperatureRepository.createTemperature(temperatureDto);
@@ -29,4 +27,9 @@ export class TemperatureService {
   async remove(id: string): Promise<void> {
     await this.temperatureRepository.delete(id);
   }
+
+  findAll(currentUser : User): Promise<Temperature[]> {
+    return this.temperatureRepository.find({where: {patient : currentUser}});
+  }
+  
 }
