@@ -21,6 +21,9 @@ import { Attachment } from 'src/attachments/attachments.entity';
 import { NewAttachmentsDto } from './dto/new-attachments.dto';
 import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
 import { Doctor } from 'src/doctors/doctors.entity';
+import { Temperature } from 'src/temperature/temperature.entity';
+import { NewTemperatureDto } from './dto/new-temperature.dto';
+import { RemoveTemperaturesDto } from './dto/remove-temperatures.dto';
 
 @ApiTags('patients')
 @ApiBearerAuth()
@@ -215,5 +218,26 @@ export class PatientsController {
   @UseGuards(RolesGuard)
   removeDoctor(@Param('id') id: string): Promise<UpdateResult> {
     return this.patientsService.unsetDoctor(id);
+  }
+
+  @Get(':id/temperatures')
+  @Roles('Admin', 'Labo', 'Patient', 'Doctor', 'Ide', 'Monitor')
+  @UseGuards(RolesGuard)
+  getTemperatures(@Param('id') id: string): Promise<Temperature[]> {
+    return this.patientsService.getTemperatures(id);
+  }
+
+  @Post(':id/add/temperature')
+  @Roles('Admin', 'Patient', 'Doctor', 'Ide')
+  @UseGuards(RolesGuard)
+  newTemperature(@Param('id') id: string, @Body() newTemperatureDto: NewTemperatureDto): Promise<void> {
+    return this.patientsService.newTemperature(id, newTemperatureDto);
+  }
+
+  @Delete(':id/del/Temperatures')
+  @Roles('Admin', 'Patient', 'Doctor', 'Ide')
+  @UseGuards(RolesGuard)
+  removeTemperatures(@Param('id') id: string, @Body() removeTemperaturesDto: RemoveTemperaturesDto): Promise<void> {
+    return this.patientsService.removeTemperatures(id, removeTemperaturesDto);
   }
 }

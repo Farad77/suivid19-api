@@ -14,6 +14,9 @@ import { Attachment } from 'src/attachments/attachments.entity';
 import { NewAttachmentsDto } from './dto/new-attachments.dto';
 import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
 import { Doctor } from 'src/doctors/doctors.entity';
+import { Temperature } from 'src/temperature/temperature.entity';
+import { NewTemperatureDto } from './dto/new-temperature.dto';
+import { RemoveTemperaturesDto } from './dto/remove-temperatures.dto';
 
 @EntityRepository(Patient)
 export class PatientRepository extends Repository<Patient> {
@@ -207,5 +210,43 @@ export class PatientRepository extends Repository<Patient> {
     user.doctor = Promise.resolve(doctor);
 
     await this.save(user);
+  }
+
+  async getTemperatures(id: string) {
+    return await this.manager
+      .createQueryBuilder()
+      .select('temperature')
+      .from(Temperature, 'temperature')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany();
+  }
+
+  async addNewTemperature(id: string, newTemperatureDto: NewTemperatureDto) {
+    const temperatureRepository = this.manager.getRepository(Temperature);
+    const patient = new Patient();
+    patient.id = parseInt(id);
+
+    const temperature = new Temperature();
+    temperature.patient = Promise.resolve(patient);
+    temperature.value = newTemperatureDto.value;
+    temperature.comment = newTemperatureDto.comment;
+    temperature.date = newTemperatureDto.date;
+
+    await temperatureRepository.save(temperature);
+    // TODO: manage error : return 500 if there is error
+  }
+
+  async removeTemperatures(id: string, removeTemperaturesDto: RemoveTemperaturesDto) {
+    await this.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Temperature)
+      .where('"id" IN (:...ids) AND "patientId" = :patient', {
+        ids: removeTemperaturesDto.temperatures.map(removeTemperatureDto => removeTemperatureDto.id),
+        patient: id,
+      })
+      .execute();
   }
 }

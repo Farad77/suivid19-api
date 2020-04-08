@@ -17,6 +17,9 @@ import { Attachment } from 'src/attachments/attachments.entity';
 import { NewAttachmentsDto } from './dto/new-attachments.dto';
 import { RemoveAttachmentsDto } from './dto/remove-attachments.dto';
 import { Doctor } from 'src/doctors/doctors.entity';
+import { Temperature } from 'src/temperature/temperature.entity';
+import { NewTemperatureDto } from './dto/new-temperature.dto';
+import { RemoveTemperaturesDto } from './dto/remove-temperatures.dto';
 
 @Injectable()
 export class PatientsService {
@@ -138,5 +141,17 @@ export class PatientsService {
 
   unsetDoctor(id: string): Promise<UpdateResult> {
     return this.patientsRepository.update(id, { doctor: null });
+  }
+
+  getTemperatures(id: string): Promise<Temperature[]> {
+    return this.patientsRepository.getTemperatures(id);
+  }
+
+  newTemperature(id: string, newTemperatureDto: NewTemperatureDto): Promise<void> {
+    return this.patientsRepository.addNewTemperature(id, newTemperatureDto);
+  }
+
+  removeTemperatures(id: string, removeTemperaturesDto: RemoveTemperaturesDto): Promise<void> {
+    return this.patientsRepository.removeTemperatures(id, removeTemperaturesDto);
   }
 }
