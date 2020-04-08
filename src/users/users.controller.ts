@@ -4,9 +4,10 @@ import { UsersService } from './users.service';
 import { User } from './users.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateResult } from 'typeorm';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Roles } from 'src/roles.decorator';
 import { RolesGuard } from 'src/roles.guard';
+import { CurrentUser } from '../current-user.decorator';
 
 @ApiTags('users')
 @ApiBearerAuth()
