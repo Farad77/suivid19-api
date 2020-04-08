@@ -253,8 +253,8 @@ export class PatientRepository extends Repository<Patient> {
       .execute();
   }
   
-  async getTrackings(id: string, withCarers: boolean = false) {
-    return withCarers 
+  async getTrackings(id: string, withCarer: boolean = false) {
+    return withCarer
       ? await this.manager.createQueryBuilder()
       .select('tracking')
       .from(Tracking, 'tracking')

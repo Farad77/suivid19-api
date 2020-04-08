@@ -246,15 +246,15 @@ export class PatientsController {
 
   @Get(':id/trackings')
   @ApiQuery({
-    name: 'withCarers',
+    name: 'withCarer',
     type: 'boolean',
     required: false,
-    description: 'If enable, carers will be shown inside each tracking. The default value is false.'
+    description: 'If enable, carer will be shown inside each tracking. The default value is false.'
   })
   @Roles('Admin', 'Labo', 'Patient', 'Doctor', 'Ide', 'Monitor')
   @UseGuards(RolesGuard)
-  getTrackings(@Param('id') id: string, @Query('withCarers') withCarers): Promise<Tracking[]> {
-    return this.patientsService.getTrackings(id, withCarers && withCarers == 'true');
+  getTrackings(@Param('id') id: string, @Query('withCarer') withCarer): Promise<Tracking[]> {
+    return this.patientsService.getTrackings(id, withCarer && withCarer == 'true');
   }
 
   @Post(':id/add/tracking')

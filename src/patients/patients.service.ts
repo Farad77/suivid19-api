@@ -158,8 +158,8 @@ export class PatientsService {
     return this.patientsRepository.removeTemperatures(id, removeTemperaturesDto);
   }
 
-  getTrackings(id: string, withCarers: boolean = false): Promise<Tracking[]> {
-    return this.patientsRepository.getTrackings(id, withCarers);
+  getTrackings(id: string, withCarer: boolean = false): Promise<Tracking[]> {
+    return this.patientsRepository.getTrackings(id, withCarer);
   }
 
   newTracking(id: string, newTrackingDto: NewTrackingDto): Promise<void> {
