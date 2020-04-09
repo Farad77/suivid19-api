@@ -11,7 +11,7 @@ export class Temperature{
     @Column()
     value : number;
 
-    @ManyToOne(type => Patient, patient => patient.temperatures)
+    @ManyToOne(type => Patient)
     @JoinColumn({ name: 'patientId' })
     patient : Promise<Patient>;
 

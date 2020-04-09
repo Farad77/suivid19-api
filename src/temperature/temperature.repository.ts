@@ -55,11 +55,14 @@ export class TemperatureRepository extends Repository<Temperature>{
 
       async getAllTempByPatient(id : string){
 
-       return this.manager.createQueryBuilder()
-        .select('temperature').from(Temperature, 'temperature')
-        .where('"patientId" = :patient', {
-          patient: id
-        }).getMany();
+       return await this.manager
+      .createQueryBuilder()
+      .select('temperature')
+      .from(Temperature, 'temperature')
+      .where('"patientId" = :patient', {
+        patient: id
+      })
+      .getMany();
 
       }
     
