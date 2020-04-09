@@ -54,6 +54,4 @@ export class Patient extends User {
   @JoinColumn({ name: 'doctorId' })
   doctor: Promise<Doctor>;
 
-  @OneToMany(type => Temperature, temp => temp.patient)
-  temperatures: Promise<Temperature[]>;
 }

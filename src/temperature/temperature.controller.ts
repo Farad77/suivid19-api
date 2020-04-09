@@ -8,6 +8,8 @@ import { UpdateTemperatureDto } from './dto/update-temperature.dto';
 import { CreateTemperatureDto } from './dto/create-temperature.dto';
 import { CurrentUser } from '../current-user.decorator';
 import { Patient } from '../patients/patients.entity';
+import { RolesGuard } from 'src/roles.guard';
+import { Roles } from 'src/roles.decorator';
 
 @ApiTags('temperature')
 @ApiBearerAuth()
@@ -29,6 +31,8 @@ export class TemperatureController {
     }
 
     @Get(':patientId')
+    @Roles('Admin', 'Labo', 'Patient', 'Doctor', 'Ide', 'Monitor')
+    @UseGuards(RolesGuard)
     getAllTemp(@Param('patientId') id : string): Promise<Temperature[]> {
       return this.temperatureService.findAllTemperatureByPatient(id);
     }
