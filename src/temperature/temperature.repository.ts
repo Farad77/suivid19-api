@@ -24,23 +24,16 @@ export class TemperatureRepository extends Repository<Temperature>{
       }
 
       async getTemperaturePatientByDoctor(id : string) : Promise<Temperature[]>{
-
-        const patientRepository = this.manager.getRepository(Patient);
-        let relations = [];
-        this.listePatient = patientRepository.find({ relations: relations, where: { doctor: { id: id } } });
-
-        for(let i=0; i<(await this.listePatient).length;i++){
-
-          this.liste =  this.getAllTempByPatient(this.listePatient[i]);
-        
-          for(let k=0; k<(await this.liste).length;k++){
-
-            (await this.listeTotal).push(this.liste[k]);
-          }
-        }
-
-        return await this.listeTotal;
-              
+        return await this.manager
+          .createQueryBuilder()
+          .select('temperature')
+          .from(Temperature, 'temperature')
+          .leftJoinAndSelect('temperature.patient', 'patient')
+          .leftJoin('patient.doctor', 'doctor')
+          .where('doctor."id" = :doctor', {
+            doctor: id
+          })
+          .getMany();
       }
 
       async getAllTempByPatient(id : string){
