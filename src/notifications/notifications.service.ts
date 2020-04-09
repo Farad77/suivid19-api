@@ -18,8 +18,8 @@ export class NotificationsService {
     return this.notificationsRepository.createNotification(notification);
   }
 
-  findOne(id: string): Promise<Notification> {
-    return this.notificationsRepository.findOne(id);
+  findOne(currentUser: User, id: string): Promise<Notification[]> {
+    return this.notificationsRepository.find({ where: { id: id, user: currentUser } });
   }
 
   update(id: string, updateNotificationDto: UpdateNotificationDto): Promise<UpdateResult> {
