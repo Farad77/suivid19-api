@@ -22,8 +22,8 @@ export class NotificationsController {
   }
 
   @Get(':id')
-  get(@Param('id') id: string): Promise<Notification> {
-    return this.notificationsService.findOne(id);
+  get(@CurrentUser() currentUser, @Param('id') id: string): Promise<Notification[]> {
+    return this.notificationsService.findOne(currentUser, id);
   }
 
   @Post()
@@ -42,22 +42,4 @@ export class NotificationsController {
   remove(@Param('id') id: string): Promise<void> {
     return this.notificationsService.remove(id);
   }
-
-  //Notification pour docteur
-  /*
-
-  Partie NOTIF ok 
-  Format : Trie par symptomes (par gravité, Nombre de symptome, par température)
-{
-  Nicolas(Patient): [39°, fievre, ... (Les symptomes négatifs)],
-  Paul(Patient): [38.5°]
-}
-  */
-
-  //Notification pour patient
-  /**
-   *Vérifie la derniere fois que l'user a pris sa temp (tt les 6h)
-   * message : Vous devez prélever votre température
-   */
-  
 }

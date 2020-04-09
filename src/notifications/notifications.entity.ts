@@ -1,5 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
 import { User } from 'src/users/users.entity';
+import { NotificationModel } from 'src/notification-model/notification-model.entity';
+
+export enum Status {
+  VALIDATE = 202,
+  NEUTRAL = 404,
+  ERROR = 400
+}
 
 @Entity()
 export class Notification {
@@ -27,5 +34,15 @@ export class Notification {
 
   @Column()
   viewDate: Date;
+
+  @OneToOne(type => NotificationModel)
+  @JoinColumn()
+  model: Promise<NotificationModel>;
+
+  @Column({
+    type: 'enum',
+    enum: Status
+  })
+  status: Status;
 
 }
