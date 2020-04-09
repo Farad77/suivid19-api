@@ -42,4 +42,5 @@ export class NotificationsController {
   remove(@Param('id') id: string): Promise<void> {
     return this.notificationsService.remove(id);
   }
+
 }
