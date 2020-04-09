@@ -17,9 +17,13 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { username: user.email, userid: user.id, role: await this.usersService.getRole(user.id) };
+    const payload = { username: user.email, name: this.capitalFirst(user.firstName) + ' ' + this.capitalFirst(user.lastName), userid: user.id, role: await this.usersService.getRole(user.id) };
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  capitalFirst(word: string): string {
+    return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   }
 }
