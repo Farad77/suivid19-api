@@ -3,12 +3,15 @@ import { Temperature } from "./temperature.entity";
 import { CreateTemperatureDto } from "./dto/create-temperature.dto";
 import { User } from "../users/users.entity";
 import { Doctor } from "../doctors/doctors.entity";
+import { Patient } from "../patients/patients.entity";
 
 @EntityRepository(Temperature)
 export class TemperatureRepository extends Repository<Temperature>{
 
   docteur : Promise<Doctor>;
   liste : Promise<Temperature[]>;
+  listeTotal : Promise<Temperature[]>;
+  listePatient : Promise<Patient[]>;
 
     async createTemperature(createTemperatureDto: CreateTemperatureDto) {
         const temperature = new Temperature();
@@ -22,35 +25,22 @@ export class TemperatureRepository extends Repository<Temperature>{
 
       async getTemperaturePatientByDoctor(id : string) : Promise<Temperature[]>{
 
-        this.docteur = Promise.resolve(this.manager.createQueryBuilder()
-        .select('doctor').from(Doctor, 'doctor')
-        .where('"doctorId" = :doctor', {
-          doctor: id
-        }).getOne());
+        const patientRepository = this.manager.getRepository(Patient);
+        let relations = [];
+        this.listePatient = patientRepository.find({ relations: relations, where: { doctor: { id: id } } });
 
-        /*this.liste = this.manager
-          .createQueryBuilder()
-          .select('temperature')
-          .from(Temperature, 'temperature')
-          .where("temperature.patient IN (:...patients)", { patients: (await this.docteur).patients })
-          .getMany();*/
-        /*if(currentUser.role == "Doctor"){
-  
-         this.docteur = Promise.resolve(this.manager.createQueryBuilder()
-          .select('doctor').from(Doctor, 'doctor')
-          .where('"doctorId" = :doctor', {
-            doctor: currentUser.id
-          }).getOne());
+        for(let i=0; i<(await this.listePatient).length;i++){
 
-          this.liste = Promise.resolve(this.manager
-          .createQueryBuilder()
-          .select('temperature')
-          .from(Temperature, 'temperature')
-          .where("temperature.patient IN (:...patients)", { patients: (await this.docteur).patients })
-          .getMany);
-        }*/
-          return this.liste;
+          this.liste =  this.getAllTempByPatient(this.listePatient[i]);
         
+          for(let k=0; k<(await this.liste).length;k++){
+
+            (await this.listeTotal).push(this.liste[k]);
+          }
+        }
+
+        return await this.listeTotal;
+              
       }
 
       async getAllTempByPatient(id : string){
