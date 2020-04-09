@@ -30,7 +30,7 @@ export class TemperatureController {
       return this.temperatureService.findOne(id);
     }
 
-    @Get(':id/patient')
+    @Get('patient/:id')
     @Roles('Admin', 'Labo', 'Patient', 'Doctor', 'Ide', 'Monitor')
     @UseGuards(RolesGuard)
     getAllTemp(@Param('id') id : string): Promise<Temperature[]> {
@@ -52,7 +52,7 @@ export class TemperatureController {
       return this.temperatureService.remove(id);
     }
 
-    @Get(':id/doctor')
+    @Get('doctor/:id/patients')
     getAllPatient(@Param('id') id : string) :Promise<Temperature[]> {
       return this.temperatureService.findAllPatientByDoctor(id);
     } 
