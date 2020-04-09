@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
 import { Test } from "../tests/tests.entity";
 
 @Entity()
@@ -15,5 +15,9 @@ export class Symptoms {
 
     @Column()
     alertLevel : number;
+
+    @ManyToMany(type => Test, test => test.symptoms)
+    @JoinTable()
+    tests: Promise<Test[]>;
 
 }

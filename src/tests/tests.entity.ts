@@ -9,12 +9,12 @@ export class Test {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(type => User)
-  @JoinColumn()
+  @ManyToOne(type => User)
+  @JoinColumn({ name: 'carerId' })
   carer: Promise<User>;
 
-  @OneToOne(type => Patient)
-  @JoinColumn()
+  @ManyToOne(type => Patient)
+  @JoinColumn({ name: 'patientId' })
   patient: Promise<Patient>;
 
   @Column()
@@ -23,8 +23,8 @@ export class Test {
   @Column()
   hasSymptoms: boolean;
 
-  @ManyToMany(type => Symptoms)
-  @JoinTable()
+  @ManyToMany(type => Symptoms, symptom => symptom.tests)
+  @JoinTable({ name: 'symptomId' })
   symptoms: Promise<Symptoms[]>;
   
   @Column({ length: 255 })

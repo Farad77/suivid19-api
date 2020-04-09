@@ -12,7 +12,7 @@ export class TestsService {
     constructor(private testRepository : TestsRepository){}
     
     findAll(): Promise<Test[]> {
-        return this.testRepository.find();
+        return this.testRepository.find({relations : ['symptoms','patient','carer']});
       }
 
       create(test: CreateTestDto): Promise<Test> {
@@ -20,7 +20,7 @@ export class TestsService {
       }
     
       findOne(id: string): Promise<Test> {
-        return this.testRepository.findOne(id);
+        return this.testRepository.findOne(id,{relations : ['symptoms','patient','carer']});
       }
     
       update(id: string, updateTestDto: UpdateTestDto): Promise<UpdateResult> {

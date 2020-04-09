@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Surveychoices } from './surveychoices.entity';
 import { UpdateResult } from 'typeorm';
-import { CreateSurveyAnswerDto } from '../surveyanswer/dto/create-survey-answer.dto';
-import { UpdateSurveyChoice } from './dto/update-surveychoices.dto';
+import { UpdateSurveyChoiceDto } from './dto/update-surveychoices.dto';
 import { SurveychoicesRepository } from './surveychoices.repository';
-import { CreateSurveyChoice } from './dto/create-surveychoices.dto';
+import { CreateSurveyChoiceDto } from './dto/create-surveychoices.dto';
 
 @Injectable()
 export class SurveychoicesService {
@@ -12,18 +11,18 @@ export class SurveychoicesService {
     constructor(private surveyChoicesRepository: SurveychoicesRepository) { }
 
   findAll(): Promise<Surveychoices[]> {
-    return this.surveyChoicesRepository.find();
+    return this.surveyChoicesRepository.find({relations: ['survey']});
   }
 
-  create(surveyChoice: CreateSurveyChoice): Promise<Surveychoices> {
+  create(surveyChoice: CreateSurveyChoiceDto): Promise<Surveychoices> {
     return this.surveyChoicesRepository.createSurveyChoice(surveyChoice);
   }
 
   findOne(id: string): Promise<Surveychoices> {
-    return this.surveyChoicesRepository.findOne(id);
+    return this.surveyChoicesRepository.findOne(id, {relations: ['survey']});
   }
 
-  update(id: string, updateUserDto: UpdateSurveyChoice): Promise<UpdateResult> {
+  update(id: string, updateUserDto: UpdateSurveyChoiceDto): Promise<UpdateResult> {
     return this.surveyChoicesRepository.update(id, updateUserDto);
   }
 

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
 import { Survey } from '../survey/survey.entity'
 @Entity()
 export class Surveychoices {
@@ -6,8 +6,8 @@ export class Surveychoices {
     @PrimaryGeneratedColumn()
     id : number;
     
-    @OneToOne(type => Survey)
-    @JoinColumn()
+    @ManyToOne(type => Survey)
+    @JoinColumn({ name: 'surveyId' })
     survey : Promise<Survey>
 
     @Column({length : 255})

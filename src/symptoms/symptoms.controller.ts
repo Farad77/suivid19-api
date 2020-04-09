@@ -5,6 +5,7 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UpdateResult } from 'typeorm';
 import { UpdateSymptomDto } from './dto/update-symptoms.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CreateSymptomDto } from './dto/create-symptoms.dto';
 
 @ApiTags('symptoms')
 @ApiBearerAuth()
@@ -18,6 +19,11 @@ export class SymptomsController {
     @Get()
     getAll(): Promise<Symptoms[]> {
     return this.symptomsService.findAll();
+  }
+
+  @Post()
+  create(@Body() symptom: CreateSymptomDto): Promise<Symptoms> {
+    return this.symptomsService.create(symptom);
   }
     
   @Get(':id')

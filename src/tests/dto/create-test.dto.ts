@@ -5,10 +5,10 @@ import { Symptoms } from '../../symptoms/symptoms.entity';
 
 export class CreateTestDto {
   @ApiProperty()
-  carer: User;
+  carer: Promise<User>;
 
   @ApiProperty()
-  patient: Patient;
+  patient: Promise<Patient>;
 
   @ApiProperty()
   hasCough: boolean;
@@ -17,7 +17,7 @@ export class CreateTestDto {
   hasSymptoms: boolean;
 
   @ApiProperty()
-  symptoms: Symptoms[];
+  symptoms: Promise<Symptoms[]>;
   
   @ApiProperty()
   email: string;
