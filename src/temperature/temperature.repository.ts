@@ -1,4 +1,4 @@
-import { Repository, EntityRepository } from "typeorm";
+import { Repository, EntityRepository, MinKey } from "typeorm";
 import { Temperature } from "./temperature.entity";
 import { CreateTemperatureDto } from "./dto/create-temperature.dto";
 import { User } from "../users/users.entity";
@@ -48,6 +48,20 @@ export class TemperatureRepository extends Repository<Temperature>{
         patient: id
       })
       .getMany();
+
+      }
+
+      async getLastTemperature(id : string){
+
+        return await this.manager
+        .createQueryBuilder()
+        .select('temperature')
+        .from(Temperature, 'temperature')
+        .where('"patientId" = :patient', {
+          patient: id
+        })
+        .orderBy('temperature.date', 'DESC')
+        .getOne();
 
       }
     

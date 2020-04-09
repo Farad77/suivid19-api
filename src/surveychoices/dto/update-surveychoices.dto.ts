@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Survey } from "../../survey/survey.entity";
 
-export class UpdateSurveyChoice{
+export class UpdateSurveyChoiceDto{
 
     @ApiPropertyOptional()
     survey : Promise<Survey>

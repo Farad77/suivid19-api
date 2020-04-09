@@ -11,7 +11,7 @@ export class SurveyService {
     constructor(private surveyRepository: SurveyRepository) { }
 
     findAll(): Promise<Survey[]> {
-      return this.surveyRepository.find();
+      return this.surveyRepository.find({relations: ['categorie']});
     }
   
     create(surveyDto: CreateSurveyDto): Promise<Survey> {
@@ -19,7 +19,7 @@ export class SurveyService {
     }
   
     findOne(id: string): Promise<Survey> {
-      return this.surveyRepository.findOne(id);
+      return this.surveyRepository.findOne(id, {relations: ['categorie']});
     }
   
     update(id: string, updateSurveyDto: UpdateSurvey): Promise<UpdateResult> {
@@ -30,8 +30,9 @@ export class SurveyService {
       await this.surveyRepository.delete(id);
     }
   
-    findByTitle(title: string): Promise<Survey | undefined> {
-      return this.surveyRepository.findOne({ title: title });
+    findAllByCategorie(id:string) : Promise<Survey[]> {
+
+      return this.surveyRepository.getAllSurveyByCategorie(id);
     }
 
 }

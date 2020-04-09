@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
 import { Test } from "../tests/tests.entity";
 import { Survey } from "../survey/survey.entity";
 
@@ -11,12 +11,12 @@ export class SurveyAnswer{
     @Column({length : 255})
     answer : string;
 
-    @OneToOne(type => Survey)
-    @JoinColumn()
+    @ManyToOne(type => Survey)
+    @JoinColumn({ name: 'surveyId' })
     survey: Promise<Survey>;
 
-    @OneToOne(type => Test)
-    @JoinColumn()
+    @ManyToOne(type => Test)
+    @JoinColumn({ name: 'testId' })
     test: Promise<Test>;
 
     

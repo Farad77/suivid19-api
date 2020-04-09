@@ -40,5 +40,10 @@ export class SurveyController {
       return this.surveyService.create(survey);
     }
 
+  @Get('categorie/:id')
+  getAllSurveyByCategorie(@Param('id') id: string): Promise<Survey[]> {
+    return this.surveyService.findAllByCategorie(id);
+  }
+
 
 }

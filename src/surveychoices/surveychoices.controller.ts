@@ -1,11 +1,12 @@
-import { Controller, Get, Put, Delete, Param, UseGuards, Body } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Param, UseGuards, Body, Post } from '@nestjs/common';
 import { SurveychoicesRepository } from './surveychoices.repository';
 import { SurveychoicesService } from './surveychoices.service';
 import { Surveychoices } from './surveychoices.entity';
 import { UpdateResult } from 'typeorm';
-import { UpdateSurveyChoice } from './dto/update-surveychoices.dto';
+import { UpdateSurveyChoiceDto } from './dto/update-surveychoices.dto';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { CreateSurveyChoiceDto } from './dto/create-surveychoices.dto';
 
 @ApiTags('surveychoices')
 @ApiBearerAuth()
@@ -26,7 +27,7 @@ export class SurveychoicesController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() surveyChoice: UpdateSurveyChoice): Promise<UpdateResult> {
+  update(@Param('id') id: string, @Body() surveyChoice: UpdateSurveyChoiceDto): Promise<UpdateResult> {
     return this.surveyChoicesService.update(id, surveyChoice);
   }
 
@@ -35,8 +36,12 @@ export class SurveychoicesController {
     return this.surveyChoicesService.remove(id);
   }
 
-  @Get(':surveyId')
-  getChoiceBySurvey(@Param('surveyId') surveyId : string) : Promise<Surveychoices[]>{
+  @Post()
+  create(@Body() surveyChoice: CreateSurveyChoiceDto) {
+    return this.surveyChoicesService.create(surveyChoice);
+}
+  @Get('survey/:id')
+  getChoicesBySurvey(@Param('id') surveyId : string) : Promise<Surveychoices[]>{
 
     return this.surveyChoicesService.getChoicesBySurvey(surveyId);
 

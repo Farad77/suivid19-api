@@ -16,4 +16,17 @@ export class SurveyRepository extends Repository<Survey> {
         return await this.save(survey);
       }
 
+      async getAllSurveyByCategorie(id : string) : Promise<Survey[]>{
+
+        return await this.manager
+        .createQueryBuilder()
+        .select('survey')
+        .from(Survey,'survey')
+        .where('"surveyCategorieId" = :categorie', {
+          categorie: id
+        })
+        .getMany();
+
+      }
+
 }

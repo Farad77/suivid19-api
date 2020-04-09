@@ -52,10 +52,14 @@ export class TemperatureController {
       return this.temperatureService.remove(id);
     }
 
-    @Get('doctor/:id/patients')
+    @Get('doctor/:id/patients/temperatures')
     getAllPatient(@Param('id') id : string) :Promise<Temperature[]> {
       return this.temperatureService.findAllPatientByDoctor(id);
     } 
 
+    @Get('patient/:id/lastTemperature')
+    getLastTemperature(@Param('id') id : string) :Promise<Temperature> {
+      return this.temperatureService.findLastTemperatureByPatient(id);
+    } 
     
 }
