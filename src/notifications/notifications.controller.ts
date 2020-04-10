@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { CreateNotificationDto } from './dto/create-notification.dto';
+import { SetViewNotificationDto } from './dto/setViewed-notification.dto'
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { NotificationsService } from './notifications.service';
 import { Notification } from './notifications.entity';
@@ -24,6 +25,11 @@ export class NotificationsController {
   @Get(':id')
   get(@CurrentUser() currentUser, @Param('id') id: string): Promise<Notification[]> {
     return this.notificationsService.findOne(currentUser, id);
+  }
+
+  @Post(':id')
+  setViewed(@CurrentUser() currentUser, @Param('id') id: string, @Body() viewed: SetViewNotificationDto) {
+    return this.notificationsService.setViewed(currentUser, id, viewed.isViewed, viewed.viewDate);
   }
 
   @Post()
