@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Test } from "../../tests/tests.entity";
 
 export class CreateSymptomDto {
     @ApiProperty()
@@ -9,5 +10,9 @@ export class CreateSymptomDto {
   
     @ApiProperty()
     alertLevel: number;
+
+    @ApiProperty()
+    tests: Promise<Test[]>;
+
   
   }

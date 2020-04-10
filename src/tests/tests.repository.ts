@@ -21,7 +21,7 @@ export class TestsRepository extends Repository<Test> {
     test.email = createTestDto.email;
     test.hasVirus = createTestDto.hasVirus;
     test.hasContactSickPatient = createTestDto.hasContactSickPatient;
-    test.tempature = createTestDto.tempature;
+    test.temperature = createTestDto.temperature;
     test.location = createTestDto.location;
     test.date = createTestDto.date;
     test.comment = createTestDto.comment;
@@ -44,6 +44,45 @@ export class TestsRepository extends Repository<Test> {
       await this.symptomRepository.save(symptom);
       // TODO: manage error : return 500 if there is error
     }
+
+    async getAllTestByPatient(id : string) : Promise<Test[]>{
+
+      return await this.manager.createQueryBuilder()
+      .select('test')
+      .from(Test, 'test')
+      .where('"patientId" = :patient', {
+        patient :id
+      })
+      .getMany();
+    }
+
+    async getAllTestByPatientByDoctor(id : string) : Promise<Test[]>{
+
+      return await this.manager
+          .createQueryBuilder()
+          .select('test')
+          .from(Test, 'test')
+          .leftJoinAndSelect('test.patient', 'patient')
+          .leftJoin('patient.doctor', 'doctor')
+          .where('doctor."id" = :doctor', {
+            doctor: id
+          })
+          .getMany();
+    }
+
+    async getLastTestByPatient(id : string) : Promise<Test>{
+
+      return await this.manager
+      .createQueryBuilder()
+      .select('test')
+      .from(Test, 'test')
+      .where('"patientId" = :patient', {
+        patient :id
+      })
+      .orderBy('test.date','DESC')
+      .getOne();
+      
+   }
     
   }
 

@@ -29,7 +29,7 @@ export class CreateTestDto {
   hasContactSickPatient: boolean;
   
   @ApiProperty()
-  tempature: number;
+  temperature: number;
 
   @ApiProperty()
   location: string;

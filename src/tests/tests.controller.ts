@@ -6,6 +6,7 @@ import { UpdateResult } from 'typeorm';
 import { UpdateTestDto }from './dto/update-test.dto'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateTestDto } from './dto/create-test.dto';
+import { get } from 'http';
 
 @ApiTags('tests')
 @ApiBearerAuth()
@@ -24,6 +25,24 @@ export class TestsController {
   get(@Param('id') id: string): Promise<Test> {
     return this.testService.findOne(id);
   }
+
+@Get('patient/:id')
+getAllTestByPatient(@Param('id') id: string) : Promise<Test[]>{
+
+  return this.testService.getAllTestByPatient(id);
+}
+
+@Get('doctor/:id/patients')
+getAllTestByPatientByDoctor(@Param('id') id: string) : Promise<Test[]>{
+
+  return this.testService.getAllTestByPatientByDoctor(id);
+}
+
+@Get('patient/:id/lastTest')
+getLastTestByPatient(@Param('id') id: string) : Promise<Test>{
+
+  return this.testService.getLastTestByPatient(id);
+}
 
   @Post()
   create(@Body() test: CreateTestDto): Promise<Test> {

@@ -34,4 +34,16 @@ export class TestsService {
       newSymptom(id: string, newSymptomDto: NewSymptomDto): Promise<void> {
         return this.testRepository.addNewSymptoms(id, newSymptomDto);
       }
+
+      getAllTestByPatient(id : string) : Promise<Test[]>{
+        return this.testRepository.getAllTestByPatient(id);
+      }
+
+      getAllTestByPatientByDoctor(id : string) : Promise<Test[]>{
+        return this.testRepository.getAllTestByPatientByDoctor(id);
+      }
+
+      getLastTestByPatient(id : string): Promise<Test>{
+        return this.testRepository.getLastTestByPatient(id);
+      }
 }

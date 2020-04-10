@@ -8,10 +8,6 @@ import { Patient } from "../patients/patients.entity";
 @EntityRepository(Temperature)
 export class TemperatureRepository extends Repository<Temperature>{
 
-  docteur : Promise<Doctor>;
-  liste : Promise<Temperature[]>;
-  listeTotal : Promise<Temperature[]>;
-  listePatient : Promise<Patient[]>;
 
     async createTemperature(createTemperatureDto: CreateTemperatureDto) {
         const temperature = new Temperature();

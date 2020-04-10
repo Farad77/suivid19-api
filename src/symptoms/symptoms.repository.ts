@@ -13,4 +13,19 @@ export class SymptomsRepository extends Repository<Symptoms> {
 
     return await this.save(symptom);
   }
+
+  async getByPatient(id : string){
+
+    return await this.manager
+    .createQueryBuilder()
+    .select('symptom')
+    .from(Symptoms, 'symptom')
+    .leftJoinAndSelect('symptom.tests', 'test')
+    .leftJoinAndSelect('test.patient', 'patient')
+    .andWhere('patient."id" = :patient', {
+      patient: id
+    })
+    .getMany();
+
+  }
 }

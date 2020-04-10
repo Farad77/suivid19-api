@@ -17,7 +17,7 @@ export class Symptoms {
     alertLevel : number;
 
     @ManyToMany(type => Test, test => test.symptoms)
-    @JoinTable()
+    @JoinTable({ name: 'tests' })
     tests: Promise<Test[]>;
 
 }

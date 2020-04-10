@@ -10,14 +10,14 @@ export class SymptomsService {
     constructor(private symptomRepository : SymptomsRepository){}
     
     findAll(): Promise<Symptoms[]> {
-        return this.symptomRepository.find();
+        return this.symptomRepository.find({relations : ['tests']});
     }
           create(symptom: CreateSymptomDto): Promise<Symptoms> {
             return this.symptomRepository.createSymptom(symptom);
           }
         
           findOne(id: string): Promise<Symptoms> {
-            return this.symptomRepository.findOne(id);
+            return this.symptomRepository.findOne(id,{relations : ['tests']});
           }
         
           update(id: string, updateSymptomDto: UpdateSymptomDto): Promise<UpdateResult> {
@@ -31,5 +31,10 @@ export class SymptomsService {
          /* findByDescription_Type(description: string , type : string): Promise<Symptoms> {
             return this.symptomRepository.findOne({description : description},{type : type});
           }*/
+
+          getByPatient(id : string) : Promise<Symptoms[]>{
+            return this.symptomRepository.getByPatient(id);
+          }
+
 }
 

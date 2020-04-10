@@ -37,7 +37,7 @@ export class Test {
   hasContactSickPatient: boolean;
   
   @Column()
-  tempature: number;
+  temperature: number;
 
   @Column({ length: 255 })
   location: string;

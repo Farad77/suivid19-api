@@ -12,14 +12,14 @@ export class SurveyanswerService {
     constructor(private surveyAnswerRepository : SurveyAnswerRepository){}
     
     findAll(): Promise<SurveyAnswer[]> {
-        return this.surveyAnswerRepository.find();
+        return this.surveyAnswerRepository.find({relations : ['test' , 'survey']});
     }
     create(symptom: CreateSurveyAnswerDto): Promise<SurveyAnswer> {
             return this.surveyAnswerRepository.createSurveyAnswer(symptom);
           }
         
     findOne(id: string): Promise<SurveyAnswer> {
-            return this.surveyAnswerRepository.findOne(id);
+            return this.surveyAnswerRepository.findOne(id,{relations : ['test' , 'survey']});
           }
         
     update(id: string, updateSymptomDto: UpdateSurveyAnswerDto): Promise<UpdateResult> {
@@ -28,6 +28,18 @@ export class SurveyanswerService {
         
     async remove(id: string): Promise<void> {
             await this.surveyAnswerRepository.delete(id);
+          }
+
+    getAllAnswerByPatient(id : string): Promise<SurveyAnswer[]>{
+
+            return this.surveyAnswerRepository.getAllAnswerByPatient(id);
+
+          }
+
+          getAllAnswerByPatientByTest(idPatient : string, idTest : string): Promise<SurveyAnswer[]>{
+
+            return this.surveyAnswerRepository.getAllAnswerByPatientByTest(idPatient, idTest);
+
           }
 
 }

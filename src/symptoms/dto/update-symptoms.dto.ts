@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { Test } from "../../tests/tests.entity";
 
 export class UpdateSymptomDto {
     @ApiPropertyOptional()
@@ -9,5 +10,8 @@ export class UpdateSymptomDto {
   
     @ApiPropertyOptional()
     alertLevel: number;
+
+    @ApiPropertyOptional()
+    tests: Promise<Test[]>;
   
   }

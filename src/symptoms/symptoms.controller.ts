@@ -41,4 +41,9 @@ export class SymptomsController {
     return this.symptomsService.remove(id);
   }
 
+  @Get('patient/:id')
+  getByPatient(@Param(':id') id : string): Promise<Symptoms[]>{
+    return this.symptomsService.getByPatient(id);
+  }
+
 }
