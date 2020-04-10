@@ -1,5 +1,6 @@
 import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
 import { Patient } from "../../patients/patients.entity";
+import { Double } from "typeorm";
 
 
 export class UpdateTemperatureDto{

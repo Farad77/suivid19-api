@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, JoinColumn, Entity, ManyToOne } from "typeorm";
+import { PrimaryGeneratedColumn, Column, JoinColumn, Entity, ManyToOne, Double } from "typeorm";
 import { Patient } from "../patients/patients.entity";
 
 @Entity()
@@ -8,7 +8,7 @@ export class Temperature{
     @PrimaryGeneratedColumn()
     id : number;
 
-    @Column()
+    @Column({type:"decimal", nullable: false,})
     value : number;
 
     @ManyToOne(type => Patient)
