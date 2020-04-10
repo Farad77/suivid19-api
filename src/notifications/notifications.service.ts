@@ -22,6 +22,10 @@ export class NotificationsService {
     return this.notificationsRepository.find({ where: { id: id, user: currentUser } });
   }
 
+  setViewed(currentUser: User, id: string, isViewed: boolean, viewDate: Date): Promise<UpdateResult> {
+      return this.notificationsRepository.update(id, { isViewed: isViewed, viewDate: viewDate});    
+  }
+
   update(id: string, updateNotificationDto: UpdateNotificationDto): Promise<UpdateResult> {
     return this.notificationsRepository.update(id, updateNotificationDto);
   }
